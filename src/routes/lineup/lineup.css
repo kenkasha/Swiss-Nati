@@ -1,0 +1,181 @@
+.football-field {
+	position: relative;
+	width: 100%;
+	max-width: 1000px;
+	height: 720px;
+	margin: 0 auto;
+	background:
+		linear-gradient(
+			90deg,
+			rgba(255, 255, 255, 0.04) 0%,
+			rgba(255, 255, 255, 0.04) 50%,
+			rgba(0, 0, 0, 0.04) 50%,
+			rgba(0, 0, 0, 0.04) 100%
+		),
+		#2e8b57;
+	background-size: 120px 100%;
+	border: 5px solid white;
+	border-radius: 24px;
+	overflow: hidden;
+	box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* Strafraum oben */
+.football-field::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 25%;
+	width: 50%;
+	height: 120px;
+	border: 4px solid white;
+	border-top: none;
+	border-radius: 0 0 16px 16px;
+}
+
+/* Strafraum unten */
+.football-field::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 25%;
+	width: 50%;
+	height: 120px;
+	border: 4px solid white;
+	border-bottom: none;
+	border-radius: 16px 16px 0 0;
+}
+
+.halfway-line {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 100%;
+	height: 4px;
+	background: white;
+	transform: translateY(-50%);
+}
+
+.center-circle {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 150px;
+	height: 150px;
+	border: 4px solid white;
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.player-slot {
+	position: absolute;
+	width: 170px;
+	padding: 10px;
+	background: rgba(255, 255, 255, 0.92);
+	border-radius: 16px;
+	text-align: center;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+	z-index: 2;
+}
+
+.position-label {
+	display: block;
+	font-size: 0.8rem;
+	font-weight: 700;
+	margin-bottom: 6px;
+	color: #1f5132;
+}
+
+.selected-player {
+	margin-top: 6px;
+	font-size: 0.85rem;
+	font-weight: 700;
+	color: #0d6efd;
+}
+
+/* 11 Positionen auf dem Feld */
+.slot-1 {
+	top: 86%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.slot-2 {
+	top: 70%;
+	left: 18%;
+	transform: translate(-50%, -50%);
+}
+
+.slot-3 {
+	top: 73%;
+	left: 39%;
+	transform: translate(-50%, -50%);
+}
+
+.slot-4 {
+	top: 73%;
+	left: 61%;
+	transform: translate(-50%, -50%);
+}
+
+.slot-5 {
+	top: 70%;
+	left: 82%;
+	transform: translate(-50%, -50%);
+}
+
+.slot-6 {
+	top: 52%;
+	left: 25%;
+	transform: translate(-50%, -50%);
+}
+
+.slot-7 {
+	top: 48%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.slot-8 {
+	top: 52%;
+	left: 75%;
+	transform: translate(-50%, -50%);
+}
+
+.slot-9 {
+	top: 27%;
+	left: 22%;
+	transform: translate(-50%, -50%);
+}
+
+.slot-10 {
+	top: 18%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.slot-11 {
+	top: 27%;
+	left: 78%;
+	transform: translate(-50%, -50%);
+}
+
+/* Für kleinere Bildschirme */
+@media (max-width: 768px) {
+	.football-field {
+		height: 950px;
+	}
+
+	.player-slot {
+		width: 145px;
+		padding: 8px;
+	}
+
+	.position-label {
+		font-size: 0.7rem;
+	}
+
+	.selected-player {
+		font-size: 0.75rem;
+	}
+}

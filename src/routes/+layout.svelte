@@ -49,6 +49,13 @@
 						href="/games"
 					>Spiele</a>
 				</li>
+				<li class="nav-item">
+	<a 
+		class="nav-link" 
+		class:active={page.url.pathname.startsWith('/lineup')} 
+		href="/lineup"
+	>Aufstellung</a>
+</li>
 			</ul>
 		</div>
 	</div>

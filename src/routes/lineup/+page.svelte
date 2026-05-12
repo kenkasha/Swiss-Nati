@@ -1,6 +1,10 @@
 <script>
 	import './lineup.css';
 
+	import akanjiImage from '$lib/assets/players/akanji.jpg';
+	import xhakaImage from '$lib/assets/players/xhaka.jpg';
+	import emboloImage from '$lib/assets/players/embolo.jpg';
+
 	let { data } = $props();
 
 	let positions = $state([
@@ -16,6 +20,16 @@
 		{ label: 'Stürmer', selectedPlayer: '' },
 		{ label: 'Rechter Flügel', selectedPlayer: '' }
 	]);
+
+	let playerImages = {
+		'Manuel Akanji': akanjiImage,
+		'Granit Xhaka': xhakaImage,
+		'Breel Embolo': emboloImage
+	};
+
+	function getPlayerImage(playerName) {
+		return playerImages[playerName];
+	}
 </script>
 
 <svelte:head>
@@ -48,10 +62,23 @@
 				</select>
 
 				{#if position.selectedPlayer}
-					<div class="selected-player">
-						{position.selectedPlayer}
-					</div>
-				{/if}
+{#if getPlayerImage(position.selectedPlayer)}
+	<div class="selected-player-card">
+		<img 
+			class="lineup-player-photo"
+			src={getPlayerImage(position.selectedPlayer)} 
+			alt={position.selectedPlayer} 
+		/>
+		<div class="selected-player-name">
+			{position.selectedPlayer}
+		</div>
+	</div>
+{:else}
+		<div class="selected-player">
+			{position.selectedPlayer}
+		</div>
+	{/if}
+{/if}
 			</div>
 		{/each}
 	</div>

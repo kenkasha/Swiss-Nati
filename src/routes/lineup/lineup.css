@@ -93,6 +93,43 @@
 	color: #0d6efd;
 }
 
+/* Spielerbild in der Aufstellung */
+.selected-player-card {
+	margin-top: 6px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 4px;
+}
+
+.football-field .player-slot .lineup-player-photo {
+	width: 52px !important;
+	height: 52px !important;
+	min-width: 52px !important;
+	min-height: 52px !important;
+	max-width: 52px !important;
+	max-height: 52px !important;
+	object-fit: cover !important;
+	object-position: top center !important;
+	border-radius: 50% !important;
+	border: 2px solid white;
+	background: white;
+	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+	display: block;
+	margin: 6px auto 0 auto;
+}
+
+.selected-player-name {
+	font-size: 0.72rem;
+	font-weight: 700;
+	color: #0d6efd;
+	line-height: 1.1;
+	max-width: 120px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 /* 11 Positionen auf dem Feld */
 .slot-1 {
 	top: 86%;
@@ -177,5 +214,18 @@
 
 	.selected-player {
 		font-size: 0.75rem;
+	}
+
+	.selected-player-name {
+		font-size: 0.68rem;
+	}
+
+	.football-field .player-slot .lineup-player-photo {
+		width: 44px !important;
+		height: 44px !important;
+		min-width: 44px !important;
+		min-height: 44px !important;
+		max-width: 44px !important;
+		max-height: 44px !important;
 	}
 }

@@ -8,7 +8,7 @@
 		<div class="row align-items-center">
 			<div class="col-lg-8">
 				<h1 class="display-3 fw-bold mb-3">
-					🇨🇭 Swiss Nati Matchday Manager
+					🇨🇭 Schweizer Nationalmannschaft
 				</h1>
 				<p class="lead mb-4">
 					Verwalte Spieler, Spiele und Kader-Aufstellungen der Schweizer Fussball-Nationalmannschaft 

@@ -212,18 +212,16 @@ Fasst die technische Realisierung zusammen.
   Geplant ist ein kurzer moderierter Test mit 2 bis 3 Personen. Die Testpersonen sollen typische Aufgaben direkt in der App durchführen.
 
 - **Stichprobe:**  
-  Noch nicht durchgeführt. Geplant sind Personen aus dem Umfeld der Zielgruppe, z. B. Kommiliton:innen oder Personen mit Interesse an Fussball.
+  Das Testing wurden mit zwei Studierenden aus durchgeführt.
 
 - **Aufgaben/Szenarien:**  
-  Geplante Testaufgaben:
-  1. Öffne die App und finde die Spielerübersicht.
-  2. Erfasse einen neuen Spieler.
-  3. Prüfe, ob der neue Spieler in der Übersicht erscheint.
-  4. Erfasse ein neues Spiel.
-  5. Prüfe, ob das neue Spiel in der Spieleübersicht erscheint.
-  6. Öffne die Aufstellungsseite.
-  7. Wähle mindestens drei Spieler für verschiedene Positionen aus.
-  8. Beschreibe, welche Funktion dir noch fehlt.
+Zuerst soll sie die App öffnen und sich in der Navigation orientieren, indem sie die Spielerübersicht 
+findet. Anschliessend soll sie zwei neue Spieler erfassen und überprüfen, ob diese korrekt in der 
+Spielerübersicht angezeigt werden. Danach soll sie ein neues Spiel erstellen und kontrollieren, ob 
+dieses in der Spieleübersicht erscheint. Als Erweiterung wird zusätzlich die Aufstellungsseite getestet: 
+Die Testperson soll die Seite „Aufstellung“ öffnen und mindestens drei Spieler verschiedenen 
+Positionen auf dem Fussballfeld zuweisen. Zum Abschluss wird die Testperson gefragt, welche 
+Funktionen ihr noch fehlen, was unklar war und ob sie Schwierigkeiten bei der Bedienung hatte. 
 
 - **Kennzahlen & Beobachtungen:**  
   Noch nicht formell durchgeführt. Für die finale Evaluation sollen Erfolgsquote, beobachtete Schwierigkeiten und qualitative Rückmeldungen dokumentiert werden.

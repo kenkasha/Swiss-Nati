@@ -40,6 +40,9 @@
 							<strong>Status:</strong>
 							<span class="badge bg-success">{player.status}</span>
 						</p>
+						<a href={`/players/${player._id}/edit`} class="btn btn-outline-primary mt-3">
+							Bearbeiten
+						</a>
 					</div>
 				</div>
 			</div>

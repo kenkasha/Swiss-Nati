@@ -17,6 +17,18 @@ async function getPlayers() {
 	return players;
 }
 
+async function getPlayer(id) {
+	const collection = db.collection('players');
+	const player = await collection.findOne({ _id: new ObjectId(id) });
+
+	if (!player) {
+		return null;
+	}
+
+	player._id = player._id.toString();
+	return player;
+}
+
 async function getGames() {
 	const collection = db.collection('games');
 	const games = await collection.find({}).sort({ date: 1 }).toArray();
@@ -33,6 +45,14 @@ async function createPlayer(player) {
 	await collection.insertOne(player);
 }
 
+async function updatePlayer(id, player) {
+	const collection = db.collection('players');
+	await collection.updateOne(
+		{ _id: new ObjectId(id) },
+		{ $set: player }
+	);
+}
+
 async function createGame(game) {
 	const collection = db.collection('games');
 	await collection.insertOne(game);
@@ -40,7 +60,9 @@ async function createGame(game) {
 
 export default {
 	getPlayers,
+	getPlayer,
 	getGames,
 	createPlayer,
+	updatePlayer,
 	createGame
 };

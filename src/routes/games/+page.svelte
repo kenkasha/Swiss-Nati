@@ -94,9 +94,11 @@
 								<strong>🏆 Wettbewerb:</strong> {game.competition}
 							</p>
 
-							<a href={`/games/${game._id}/edit`} class="btn btn-outline-primary">
-								Bearbeiten
-							</a>
+							{#if !pastGame}
+								<a href={`/games/${game._id}/edit`} class="btn btn-outline-primary">
+									Bearbeiten
+								</a>
+							{/if}
 						</div>
 					</div>
 				</div>

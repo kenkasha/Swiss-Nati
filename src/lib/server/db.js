@@ -63,6 +63,8 @@ async function updatePlayer(id, player) {
 		{ _id: new ObjectId(id) },
 		{ $set: player }
 	);
+
+	await syncLineupsForPlayerPosition(id, player.position);
 }
 
 async function createGame(game) {
@@ -78,6 +80,88 @@ async function updateGame(id, game) {
 	);
 }
 
+async function getLineup(gameId) {
+	const collection = db.collection('lineups');
+	const lineup = await collection.findOne({ gameId });
+
+	if (!lineup) {
+		return null;
+	}
+
+	lineup._id = lineup._id.toString();
+	return lineup;
+}
+
+async function saveLineup(gameId, positions) {
+	const collection = db.collection('lineups');
+	await collection.updateOne(
+		{ gameId },
+		{
+			$set: {
+				gameId,
+				positions,
+				updatedAt: new Date()
+			}
+		},
+		{ upsert: true }
+	);
+}
+
+function getAllowedPlayerPosition(positionLabel) {
+	if (positionLabel === 'Torwart') {
+		return 'Goalie';
+	}
+
+	if (
+		positionLabel === 'Linksverteidigung' ||
+		positionLabel === 'Innenverteidigung' ||
+		positionLabel === 'Rechtsverteidigung'
+	) {
+		return 'Verteidigung';
+	}
+
+	if (positionLabel === 'Mittelfeld') {
+		return 'Mittelfeld';
+	}
+
+	return 'Sturm';
+}
+
+async function syncLineupsForPlayerPosition(playerId, playerPosition) {
+	const collection = db.collection('lineups');
+	const lineups = await collection.find({ 'positions.selectedPlayer': playerId }).toArray();
+
+	for (const lineup of lineups) {
+		let changed = false;
+		const positions = lineup.positions.map((position) => {
+			if (
+				position.selectedPlayer === playerId &&
+				getAllowedPlayerPosition(position.label) !== playerPosition
+			) {
+				changed = true;
+				return {
+					...position,
+					selectedPlayer: ''
+				};
+			}
+
+			return position;
+		});
+
+		if (changed) {
+			await collection.updateOne(
+				{ _id: lineup._id },
+				{
+					$set: {
+						positions,
+						updatedAt: new Date()
+					}
+				}
+			);
+		}
+	}
+}
+
 export default {
 	getPlayers,
 	getPlayer,
@@ -86,5 +170,7 @@ export default {
 	createPlayer,
 	updatePlayer,
 	createGame,
-	updateGame
+	updateGame,
+	getLineup,
+	saveLineup
 };

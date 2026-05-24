@@ -1,3 +1,22 @@
+.lineup-toolbar {
+	display: grid;
+	grid-template-columns: minmax(260px, 420px) 1fr;
+	align-items: end;
+	gap: 16px;
+}
+
+.selected-game-summary {
+	padding: 12px 16px;
+	border-left: 4px solid var(--swiss-red);
+	background: #f8f9fa;
+	border-radius: 8px;
+}
+
+.selected-game-summary span {
+	display: block;
+	margin-top: 2px;
+}
+
 .football-field {
 	position: relative;
 	width: 100%;
@@ -199,6 +218,10 @@
 
 /* Für kleinere Bildschirme */
 @media (max-width: 768px) {
+	.lineup-toolbar {
+		grid-template-columns: 1fr;
+	}
+
 	.football-field {
 		height: 950px;
 	}

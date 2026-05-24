@@ -21,7 +21,7 @@
 	position: relative;
 	width: 100%;
 	max-width: 1000px;
-	height: 720px;
+	height: 980px;
 	margin: 0 auto;
 	background:
 		linear-gradient(
@@ -88,8 +88,9 @@
 
 .player-slot {
 	position: absolute;
-	width: 170px;
-	padding: 10px;
+	width: 150px;
+	min-height: 78px;
+	padding: 8px;
 	background: rgba(255, 255, 255, 0.92);
 	border-radius: 16px;
 	text-align: center;
@@ -97,12 +98,23 @@
 	z-index: 2;
 }
 
+.player-slot.has-player {
+	min-height: 128px;
+}
+
 .position-label {
 	display: block;
-	font-size: 0.8rem;
+	font-size: 0.74rem;
 	font-weight: 700;
-	margin-bottom: 6px;
+	margin-bottom: 5px;
 	color: #1f5132;
+	line-height: 1.1;
+}
+
+.player-slot .form-select {
+	font-size: 0.78rem;
+	padding-top: 0.3rem;
+	padding-bottom: 0.3rem;
 }
 
 .selected-player {
@@ -114,20 +126,20 @@
 
 /* Spielerbild in der Aufstellung */
 .selected-player-card {
-	margin-top: 6px;
+	margin-top: 5px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 4px;
+	gap: 3px;
 }
 
 .football-field .player-slot .lineup-player-photo {
-	width: 52px !important;
-	height: 52px !important;
-	min-width: 52px !important;
-	min-height: 52px !important;
-	max-width: 52px !important;
-	max-height: 52px !important;
+	width: 42px !important;
+	height: 42px !important;
+	min-width: 42px !important;
+	min-height: 42px !important;
+	max-width: 42px !important;
+	max-height: 42px !important;
 	object-fit: cover !important;
 	object-position: top center !important;
 	border-radius: 50% !important;
@@ -135,11 +147,11 @@
 	background: white;
 	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 	display: block;
-	margin: 6px auto 0 auto;
+	margin: 4px auto 0 auto;
 }
 
 .selected-player-name {
-	font-size: 0.72rem;
+	font-size: 0.68rem;
 	font-weight: 700;
 	color: #0d6efd;
 	line-height: 1.1;
@@ -151,37 +163,37 @@
 
 /* 11 Positionen auf dem Feld */
 .slot-1 {
-	top: 86%;
+	top: 93%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
 
 .slot-2 {
-	top: 70%;
+	top: 72%;
 	left: 18%;
 	transform: translate(-50%, -50%);
 }
 
 .slot-3 {
-	top: 73%;
+	top: 72%;
 	left: 39%;
 	transform: translate(-50%, -50%);
 }
 
 .slot-4 {
-	top: 73%;
+	top: 72%;
 	left: 61%;
 	transform: translate(-50%, -50%);
 }
 
 .slot-5 {
-	top: 70%;
+	top: 72%;
 	left: 82%;
 	transform: translate(-50%, -50%);
 }
 
 .slot-6 {
-	top: 52%;
+	top: 55%;
 	left: 25%;
 	transform: translate(-50%, -50%);
 }
@@ -193,7 +205,7 @@
 }
 
 .slot-8 {
-	top: 52%;
+	top: 55%;
 	left: 75%;
 	transform: translate(-50%, -50%);
 }
@@ -218,17 +230,17 @@
 
 /* 4-2-3-1 */
 .formation-4-2-3-1 .slot-6 {
-	top: 56%;
+	top: 53%;
 	left: 38%;
 }
 
 .formation-4-2-3-1 .slot-7 {
-	top: 56%;
+	top: 53%;
 	left: 62%;
 }
 
 .formation-4-2-3-1 .slot-8 {
-	top: 38%;
+	top: 36%;
 	left: 50%;
 }
 
@@ -280,17 +292,17 @@
 
 /* 3-5-2 */
 .formation-3-5-2 .slot-2 {
-	top: 72%;
+	top: 67%;
 	left: 30%;
 }
 
 .formation-3-5-2 .slot-3 {
-	top: 74%;
+	top: 67%;
 	left: 50%;
 }
 
 .formation-3-5-2 .slot-4 {
-	top: 72%;
+	top: 67%;
 	left: 70%;
 }
 
@@ -331,17 +343,17 @@
 
 /* 3-4-3 */
 .formation-3-4-3 .slot-2 {
-	top: 72%;
+	top: 67%;
 	left: 30%;
 }
 
 .formation-3-4-3 .slot-3 {
-	top: 74%;
+	top: 67%;
 	left: 50%;
 }
 
 .formation-3-4-3 .slot-4 {
-	top: 72%;
+	top: 67%;
 	left: 70%;
 }
 
@@ -382,27 +394,27 @@
 
 /* 5-3-2 */
 .formation-5-3-2 .slot-2 {
-	top: 68%;
+	top: 66%;
 	left: 14%;
 }
 
 .formation-5-3-2 .slot-3 {
-	top: 74%;
+	top: 67%;
 	left: 32%;
 }
 
 .formation-5-3-2 .slot-4 {
-	top: 76%;
+	top: 67%;
 	left: 50%;
 }
 
 .formation-5-3-2 .slot-5 {
-	top: 74%;
+	top: 67%;
 	left: 68%;
 }
 
 .formation-5-3-2 .slot-6 {
-	top: 68%;
+	top: 66%;
 	left: 86%;
 }
 

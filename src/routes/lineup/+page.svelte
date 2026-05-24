@@ -226,6 +226,10 @@
 	function hideMissingImage(event) {
 		event.currentTarget.hidden = true;
 	}
+
+	function showLoadedImage(event) {
+		event.currentTarget.hidden = false;
+	}
 </script>
 
 <svelte:head>
@@ -288,7 +292,7 @@
 				<div class="center-circle"></div>
 
 				{#each positions as position, index}
-					<div class="player-slot slot-{index + 1}">
+					<div class:has-player={position.selectedPlayer} class="player-slot slot-{index + 1}">
 						<label class="position-label" for={`position-${index}`}>{position.label}</label>
 						<input type="hidden" name={`label-${index}`} value={position.label}>
 
@@ -308,12 +312,15 @@
 
 						{#if position.selectedPlayer}
 							<div class="selected-player-card">
-								<img
-									class="lineup-player-photo"
-									src={getPlayerImage(position.selectedPlayer)}
-									alt={getPlayerName(position.selectedPlayer)}
-									onerror={hideMissingImage}
-								/>
+								{#key getPlayerImage(position.selectedPlayer)}
+									<img
+										class="lineup-player-photo"
+										src={getPlayerImage(position.selectedPlayer)}
+										alt={getPlayerName(position.selectedPlayer)}
+										onload={showLoadedImage}
+										onerror={hideMissingImage}
+									/>
+								{/key}
 								<div class="selected-player-name">
 									{getPlayerName(position.selectedPlayer)}
 								</div>

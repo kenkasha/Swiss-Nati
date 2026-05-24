@@ -54,7 +54,7 @@
 				<li class="nav-item">
 					<a
 						class="nav-link"
-						class:active={page.url.pathname.startsWith('/game')}
+						class:active={page.url.pathname === '/game'}
 						href="/game"
 					>🎮 Game</a>
 				</li>

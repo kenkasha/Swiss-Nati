@@ -22,7 +22,8 @@ export const actions = {
 			lastName: formData.get('lastName'),
 			position: formData.get('position'),
 			club: formData.get('club'),
-			status: formData.get('status')
+			status: formData.get('status'),
+			marketValueLabel: formData.get('marketValueLabel')
 		};
 
 		await db.updatePlayer(params.id, player);

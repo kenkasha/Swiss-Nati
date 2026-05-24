@@ -49,6 +49,18 @@
 			</select>
 		</div>
 
+		<div class="mb-3">
+			<label for="marketValueLabel" class="form-label">Marktwert</label>
+			<input
+				id="marketValueLabel"
+				name="marketValueLabel"
+				type="text"
+				class="form-control"
+				value={player.marketValueLabel ?? ''}
+				placeholder="z.B. CHF 36.5 Mio."
+			>
+		</div>
+
 		<button type="submit" class="btn btn-primary">
 			Änderungen speichern
 		</button>

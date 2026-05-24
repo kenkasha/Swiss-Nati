@@ -92,13 +92,14 @@ async function getLineup(gameId) {
 	return lineup;
 }
 
-async function saveLineup(gameId, positions) {
+async function saveLineup(gameId, positions, formation) {
 	const collection = db.collection('lineups');
 	await collection.updateOne(
 		{ gameId },
 		{
 			$set: {
 				gameId,
+				formation,
 				positions,
 				updatedAt: new Date()
 			}
@@ -115,12 +116,22 @@ function getAllowedPlayerPosition(positionLabel) {
 	if (
 		positionLabel === 'Linksverteidigung' ||
 		positionLabel === 'Innenverteidigung' ||
-		positionLabel === 'Rechtsverteidigung'
+		positionLabel === 'Innenverteidiger' ||
+		positionLabel === 'Rechtsverteidigung' ||
+		positionLabel === 'Linker Aussenläufer' ||
+		positionLabel === 'Rechter Aussenläufer'
 	) {
 		return 'Verteidigung';
 	}
 
-	if (positionLabel === 'Mittelfeld') {
+	if (
+		positionLabel === 'Mittelfeld' ||
+		positionLabel === 'Zentrales Mittelfeld' ||
+		positionLabel === 'Defensives Mittelfeld' ||
+		positionLabel === 'Offensives Mittelfeld' ||
+		positionLabel === 'Linkes Mittelfeld' ||
+		positionLabel === 'Rechtes Mittelfeld'
+	) {
 		return 'Mittelfeld';
 	}
 

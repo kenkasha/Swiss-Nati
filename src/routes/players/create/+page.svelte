@@ -50,6 +50,37 @@
 		</select>
 	</div>
 
+	<div class="mb-3">
+		<label for="heightCm" class="form-label">Grösse in cm</label>
+		<input id="heightCm" name="heightCm" type="number" min="0" class="form-control" placeholder="z.B. 189">
+	</div>
+
+	<div class="mb-3">
+		<label for="birthDate" class="form-label">Geburtsdatum</label>
+		<input id="birthDate" name="birthDate" type="date" class="form-control">
+	</div>
+
+	<div class="mb-3">
+		<label for="marketValueLabel" class="form-label">Marktwert</label>
+		<input
+			id="marketValueLabel"
+			name="marketValueLabel"
+			type="text"
+			class="form-control"
+			placeholder="z.B. CHF 6.4 Mio."
+		>
+	</div>
+
+	<div class="mb-3">
+		<label for="preferredFoot" class="form-label">Starker Fuss</label>
+		<select id="preferredFoot" name="preferredFoot" class="form-select">
+			<option value="">Bitte wählen</option>
+			<option value="rechts">rechts</option>
+			<option value="links">links</option>
+			<option value="beidfüssig">beidfüssig</option>
+		</select>
+	</div>
+
 	<button type="submit" class="btn btn-primary">
 		Spieler speichern
 	</button>

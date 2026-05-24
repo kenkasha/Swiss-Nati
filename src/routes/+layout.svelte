@@ -37,12 +37,19 @@
 						href="/"
 					>Home</a>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item dropdown">
 					<a
-						class="nav-link"
+						class="nav-link dropdown-toggle"
 						class:active={page.url.pathname.startsWith('/players')}
 						href="/players"
+						role="button"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
 					>Spieler</a>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item" href="/players">Spielerliste</a></li>
+						<li><a class="dropdown-item" href="/players/overview">Detailsübersicht</a></li>
+					</ul>
 				</li>
 				<li class="nav-item">
 					<a

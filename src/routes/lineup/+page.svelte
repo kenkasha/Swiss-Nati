@@ -1,39 +1,139 @@
 <script>
 	import './lineup.css';
 
-	import akanjiImage from '$lib/assets/players/akanji.jpg';
-	import xhakaImage from '$lib/assets/players/xhaka.jpg';
-	import emboloImage from '$lib/assets/players/embolo.jpg';
-
 	let { data } = $props();
 
-	const defaultPositions = [
-		{ label: 'Torwart', selectedPlayer: '' },
-		{ label: 'Linksverteidigung', selectedPlayer: '' },
-		{ label: 'Innenverteidigung', selectedPlayer: '' },
-		{ label: 'Innenverteidigung', selectedPlayer: '' },
-		{ label: 'Rechtsverteidigung', selectedPlayer: '' },
-		{ label: 'Mittelfeld', selectedPlayer: '' },
-		{ label: 'Mittelfeld', selectedPlayer: '' },
-		{ label: 'Mittelfeld', selectedPlayer: '' },
-		{ label: 'Linker Flügel', selectedPlayer: '' },
-		{ label: 'Stürmer', selectedPlayer: '' },
-		{ label: 'Rechter Flügel', selectedPlayer: '' }
-	];
-
-	let positions = $state(getInitialPositions());
-
-	let playerImages = {
-		'Manuel Akanji': akanjiImage,
-		'Granit Xhaka': xhakaImage,
-		'Breel Embolo': emboloImage
+	const formations = {
+		'4-3-3': [
+			'Torwart',
+			'Linksverteidigung',
+			'Innenverteidiger',
+			'Innenverteidiger',
+			'Rechtsverteidigung',
+			'Zentrales Mittelfeld',
+			'Defensives Mittelfeld',
+			'Zentrales Mittelfeld',
+			'Linker Flügel',
+			'Stürmer',
+			'Rechter Flügel'
+		],
+		'4-2-3-1': [
+			'Torwart',
+			'Linksverteidigung',
+			'Innenverteidiger',
+			'Innenverteidiger',
+			'Rechtsverteidigung',
+			'Defensives Mittelfeld',
+			'Defensives Mittelfeld',
+			'Offensives Mittelfeld',
+			'Linker Flügel',
+			'Stürmer',
+			'Rechter Flügel'
+		],
+		'4-4-2': [
+			'Torwart',
+			'Linksverteidigung',
+			'Innenverteidiger',
+			'Innenverteidiger',
+			'Rechtsverteidigung',
+			'Linkes Mittelfeld',
+			'Zentrales Mittelfeld',
+			'Zentrales Mittelfeld',
+			'Rechtes Mittelfeld',
+			'Stürmer',
+			'Stürmer'
+		],
+		'3-5-2': [
+			'Torwart',
+			'Innenverteidiger',
+			'Innenverteidiger',
+			'Innenverteidiger',
+			'Linker Aussenläufer',
+			'Defensives Mittelfeld',
+			'Zentrales Mittelfeld',
+			'Zentrales Mittelfeld',
+			'Rechter Aussenläufer',
+			'Stürmer',
+			'Stürmer'
+		],
+		'3-4-3': [
+			'Torwart',
+			'Innenverteidiger',
+			'Innenverteidiger',
+			'Innenverteidiger',
+			'Linkes Mittelfeld',
+			'Zentrales Mittelfeld',
+			'Zentrales Mittelfeld',
+			'Rechtes Mittelfeld',
+			'Linker Flügel',
+			'Stürmer',
+			'Rechter Flügel'
+		],
+		'5-3-2': [
+			'Torwart',
+			'Linksverteidigung',
+			'Innenverteidiger',
+			'Innenverteidiger',
+			'Innenverteidiger',
+			'Rechtsverteidigung',
+			'Zentrales Mittelfeld',
+			'Defensives Mittelfeld',
+			'Zentrales Mittelfeld',
+			'Stürmer',
+			'Stürmer'
+		]
 	};
 
+	const formationOptions = Object.keys(formations);
+
+	let selectedFormation = $state('4-3-3');
+	let positions = $state([]);
+
+	$effect.pre(() => {
+		if (positions.length === 0) {
+			selectedFormation = data.lineup?.formation ?? '4-3-3';
+			positions = getInitialPositions();
+		}
+	});
+
+	function createPositions(formation) {
+		return formations[formation].map((label) => ({
+			label,
+			selectedPlayer: ''
+		}));
+	}
+
 	function getInitialPositions() {
-		return defaultPositions.map((position, index) => ({
-			...position,
+		const labels = formations[selectedFormation] ?? formations['4-3-3'];
+
+		return labels.map((label, index) => ({
+			label,
 			selectedPlayer: data.lineup?.positions?.[index]?.selectedPlayer ?? ''
 		}));
+	}
+
+	function changeFormation(event) {
+		selectedFormation = event.currentTarget.value;
+		const oldPositions = positions;
+		const usedPlayerIds = new Set();
+
+		positions = createPositions(selectedFormation).map((position, index) => {
+			const previousPlayerId = oldPositions[index]?.selectedPlayer ?? '';
+
+			if (
+				previousPlayerId &&
+				!usedPlayerIds.has(previousPlayerId) &&
+				getPlayer(previousPlayerId)?.position === getAllowedPlayerPosition(position.label)
+			) {
+				usedPlayerIds.add(previousPlayerId);
+				return {
+					...position,
+					selectedPlayer: previousPlayerId
+				};
+			}
+
+			return position;
+		});
 	}
 
 	function changeGame(event) {
@@ -50,6 +150,10 @@
 		return player ? `${player.firstName} ${player.lastName}` : '';
 	}
 
+	function getPlayer(playerId) {
+		return data.players.find((player) => player._id === playerId);
+	}
+
 	function getAllowedPlayerPosition(positionLabel) {
 		if (positionLabel === 'Torwart') {
 			return 'Goalie';
@@ -58,12 +162,22 @@
 		if (
 			positionLabel === 'Linksverteidigung' ||
 			positionLabel === 'Innenverteidigung' ||
-			positionLabel === 'Rechtsverteidigung'
+			positionLabel === 'Innenverteidiger' ||
+			positionLabel === 'Rechtsverteidigung' ||
+			positionLabel === 'Linker Aussenläufer' ||
+			positionLabel === 'Rechter Aussenläufer'
 		) {
 			return 'Verteidigung';
 		}
 
-		if (positionLabel === 'Mittelfeld') {
+		if (
+			positionLabel === 'Mittelfeld' ||
+			positionLabel === 'Zentrales Mittelfeld' ||
+			positionLabel === 'Defensives Mittelfeld' ||
+			positionLabel === 'Offensives Mittelfeld' ||
+			positionLabel === 'Linkes Mittelfeld' ||
+			positionLabel === 'Rechtes Mittelfeld'
+		) {
 			return 'Mittelfeld';
 		}
 
@@ -85,7 +199,32 @@
 	}
 
 	function getPlayerImage(playerId) {
-		return playerImages[getPlayerName(playerId)];
+		const player = getPlayer(playerId);
+
+		if (!player?.lastName) {
+			return '';
+		}
+
+		const lastNameSlug = player.lastName.split(' ')[0].toLowerCase();
+		const imageName = (lastNameSlug === 'cömert' ? lastNameSlug : lastNameSlug
+			.toLowerCase()
+			.replace(/ä/g, 'ae')
+			.replace(/ö/g, 'oe')
+			.replace(/ü/g, 'ue')
+			.normalize('NFD')
+			.replace(/[\u0300-\u036f]/g, '')
+			.replace(/[^a-z0-9]+/g, '-')
+			.replace(/^-|-$/g, ''));
+
+		return `/players/${imageName}.jpg`;
+	}
+
+	function getFormationClass() {
+		return `formation-${selectedFormation}`;
+	}
+
+	function hideMissingImage(event) {
+		event.currentTarget.hidden = true;
 	}
 </script>
 
@@ -97,7 +236,7 @@
 	<div class="mb-4">
 		<h1 class="fw-bold mb-1">📋 Matchday-Aufstellung</h1>
 		<p class="text-muted mb-0">
-			Wähle ein Spiel und stelle dafür die Startelf der Schweizer Nationalmannschaft zusammen.
+			Wähle ein Spiel, eine Formation und stelle dafür die Startelf der Schweizer Nationalmannschaft zusammen.
 		</p>
 	</div>
 
@@ -108,28 +247,43 @@
 			Erstelle zuerst ein Spiel, bevor du eine Aufstellung speichern kannst.
 		</div>
 	{:else}
-		<div class="lineup-toolbar mb-4">
-			<div>
-				<label for="gameId" class="form-label fw-semibold">Spiel auswählen</label>
-				<select id="gameId" class="form-select" value={data.selectedGameId} onchange={changeGame}>
-					{#each data.games as game}
-						<option value={game._id}>
-							Schweiz vs. {game.opponent} · {game.date}
-						</option>
-					{/each}
-				</select>
+		<form method="POST" action={`?/saveLineup&gameId=${data.selectedGameId}`}>
+			<div class="lineup-toolbar mb-4">
+				<div>
+					<label for="gameId" class="form-label fw-semibold">Spiel auswählen</label>
+					<select id="gameId" class="form-select" value={data.selectedGameId} onchange={changeGame}>
+						{#each data.games as game}
+							<option value={game._id}>
+								Schweiz vs. {game.opponent} · {game.date}
+							</option>
+						{/each}
+					</select>
+				</div>
+
+				<div>
+					<label for="formation" class="form-label fw-semibold">Formation</label>
+					<select
+						id="formation"
+						name="formation"
+						class="form-select"
+						bind:value={selectedFormation}
+						onchange={changeFormation}
+					>
+						{#each formationOptions as formation}
+							<option value={formation}>{formation}</option>
+						{/each}
+					</select>
+				</div>
+
+				{#if getSelectedGame()}
+					<div class="selected-game-summary">
+						<strong>Aktuelles Spiel:</strong>
+						<span>Schweiz vs. {getSelectedGame().opponent}</span>
+					</div>
+				{/if}
 			</div>
 
-			{#if getSelectedGame()}
-				<div class="selected-game-summary">
-					<strong>Aktuelles Spiel:</strong>
-					<span>Schweiz vs. {getSelectedGame().opponent}</span>
-				</div>
-			{/if}
-		</div>
-
-		<form method="POST" action={`?/saveLineup&gameId=${data.selectedGameId}`}>
-			<div class="football-field">
+			<div class={`football-field ${getFormationClass()}`}>
 				<div class="halfway-line"></div>
 				<div class="center-circle"></div>
 
@@ -153,22 +307,17 @@
 						</select>
 
 						{#if position.selectedPlayer}
-							{#if getPlayerImage(position.selectedPlayer)}
-								<div class="selected-player-card">
-									<img
-										class="lineup-player-photo"
-										src={getPlayerImage(position.selectedPlayer)}
-										alt={getPlayerName(position.selectedPlayer)}
-									/>
-									<div class="selected-player-name">
-										{getPlayerName(position.selectedPlayer)}
-									</div>
-								</div>
-							{:else}
-								<div class="selected-player">
+							<div class="selected-player-card">
+								<img
+									class="lineup-player-photo"
+									src={getPlayerImage(position.selectedPlayer)}
+									alt={getPlayerName(position.selectedPlayer)}
+									onerror={hideMissingImage}
+								/>
+								<div class="selected-player-name">
 									{getPlayerName(position.selectedPlayer)}
 								</div>
-							{/if}
+							</div>
 						{/if}
 					</div>
 				{/each}

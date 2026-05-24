@@ -11,7 +11,11 @@ export const actions = {
 			lastName: formData.get('lastName'),
 			position: formData.get('position'),
 			club: formData.get('club'),
-			status: formData.get('status')
+			status: formData.get('status'),
+			heightCm: Number(formData.get('heightCm')) || null,
+			birthDate: formData.get('birthDate') || null,
+			marketValueLabel: formData.get('marketValueLabel'),
+			preferredFoot: formData.get('preferredFoot')
 		};
 
 		await db.createPlayer(player);

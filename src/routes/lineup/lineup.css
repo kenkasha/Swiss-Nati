@@ -1,6 +1,6 @@
 .lineup-toolbar {
 	display: grid;
-	grid-template-columns: minmax(260px, 420px) 1fr;
+	grid-template-columns: minmax(260px, 420px) minmax(180px, 220px) 1fr;
 	align-items: end;
 	gap: 16px;
 }
@@ -214,6 +214,221 @@
 	top: 27%;
 	left: 78%;
 	transform: translate(-50%, -50%);
+}
+
+/* 4-2-3-1 */
+.formation-4-2-3-1 .slot-6 {
+	top: 56%;
+	left: 38%;
+}
+
+.formation-4-2-3-1 .slot-7 {
+	top: 56%;
+	left: 62%;
+}
+
+.formation-4-2-3-1 .slot-8 {
+	top: 38%;
+	left: 50%;
+}
+
+.formation-4-2-3-1 .slot-9 {
+	top: 30%;
+	left: 22%;
+}
+
+.formation-4-2-3-1 .slot-10 {
+	top: 18%;
+	left: 50%;
+}
+
+.formation-4-2-3-1 .slot-11 {
+	top: 30%;
+	left: 78%;
+}
+
+/* 4-4-2 */
+.formation-4-4-2 .slot-6 {
+	top: 48%;
+	left: 18%;
+}
+
+.formation-4-4-2 .slot-7 {
+	top: 50%;
+	left: 39%;
+}
+
+.formation-4-4-2 .slot-8 {
+	top: 50%;
+	left: 61%;
+}
+
+.formation-4-4-2 .slot-9 {
+	top: 48%;
+	left: 82%;
+}
+
+.formation-4-4-2 .slot-10 {
+	top: 20%;
+	left: 42%;
+}
+
+.formation-4-4-2 .slot-11 {
+	top: 20%;
+	left: 58%;
+}
+
+/* 3-5-2 */
+.formation-3-5-2 .slot-2 {
+	top: 72%;
+	left: 30%;
+}
+
+.formation-3-5-2 .slot-3 {
+	top: 74%;
+	left: 50%;
+}
+
+.formation-3-5-2 .slot-4 {
+	top: 72%;
+	left: 70%;
+}
+
+.formation-3-5-2 .slot-5 {
+	top: 50%;
+	left: 16%;
+}
+
+.formation-3-5-2 .slot-6 {
+	top: 55%;
+	left: 50%;
+}
+
+.formation-3-5-2 .slot-7 {
+	top: 44%;
+	left: 38%;
+}
+
+.formation-3-5-2 .slot-8 {
+	top: 44%;
+	left: 62%;
+}
+
+.formation-3-5-2 .slot-9 {
+	top: 50%;
+	left: 84%;
+}
+
+.formation-3-5-2 .slot-10 {
+	top: 20%;
+	left: 42%;
+}
+
+.formation-3-5-2 .slot-11 {
+	top: 20%;
+	left: 58%;
+}
+
+/* 3-4-3 */
+.formation-3-4-3 .slot-2 {
+	top: 72%;
+	left: 30%;
+}
+
+.formation-3-4-3 .slot-3 {
+	top: 74%;
+	left: 50%;
+}
+
+.formation-3-4-3 .slot-4 {
+	top: 72%;
+	left: 70%;
+}
+
+.formation-3-4-3 .slot-5 {
+	top: 50%;
+	left: 20%;
+}
+
+.formation-3-4-3 .slot-6 {
+	top: 50%;
+	left: 42%;
+}
+
+.formation-3-4-3 .slot-7 {
+	top: 50%;
+	left: 58%;
+}
+
+.formation-3-4-3 .slot-8 {
+	top: 50%;
+	left: 80%;
+}
+
+.formation-3-4-3 .slot-9 {
+	top: 27%;
+	left: 22%;
+}
+
+.formation-3-4-3 .slot-10 {
+	top: 18%;
+	left: 50%;
+}
+
+.formation-3-4-3 .slot-11 {
+	top: 27%;
+	left: 78%;
+}
+
+/* 5-3-2 */
+.formation-5-3-2 .slot-2 {
+	top: 68%;
+	left: 14%;
+}
+
+.formation-5-3-2 .slot-3 {
+	top: 74%;
+	left: 32%;
+}
+
+.formation-5-3-2 .slot-4 {
+	top: 76%;
+	left: 50%;
+}
+
+.formation-5-3-2 .slot-5 {
+	top: 74%;
+	left: 68%;
+}
+
+.formation-5-3-2 .slot-6 {
+	top: 68%;
+	left: 86%;
+}
+
+.formation-5-3-2 .slot-7 {
+	top: 48%;
+	left: 35%;
+}
+
+.formation-5-3-2 .slot-8 {
+	top: 52%;
+	left: 50%;
+}
+
+.formation-5-3-2 .slot-9 {
+	top: 48%;
+	left: 65%;
+}
+
+.formation-5-3-2 .slot-10 {
+	top: 20%;
+	left: 42%;
+}
+
+.formation-5-3-2 .slot-11 {
+	top: 20%;
+	left: 58%;
 }
 
 /* Für kleinere Bildschirme */

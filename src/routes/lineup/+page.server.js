@@ -24,6 +24,7 @@ export const actions = {
 		}
 
 		const formData = await request.formData();
+		const formation = formData.get('formation') ?? '4-3-3';
 		const selectedPlayerIds = new Set();
 		const positions = Array.from({ length: 11 }, (_, index) => {
 			const selectedPlayer = formData.get(`position-${index}`) ?? '';
@@ -39,7 +40,7 @@ export const actions = {
 			};
 		});
 
-		await db.saveLineup(gameId, positions);
+		await db.saveLineup(gameId, positions, formation);
 
 		throw redirect(303, `/lineup?gameId=${gameId}`);
 	}

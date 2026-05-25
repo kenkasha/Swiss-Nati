@@ -25,6 +25,56 @@
 
 <section class="py-5">
 	<div class="container">
+		<div
+			id="homeCarousel"
+			class="carousel slide home-carousel shadow-sm"
+			data-bs-ride="carousel"
+			data-bs-interval="3500"
+		>
+			<div class="carousel-indicators">
+				<button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Bild 1"></button>
+				<button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="1" aria-label="Bild 2"></button>
+				<button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="2" aria-label="Bild 3"></button>
+				<button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="3" aria-label="Bild 4"></button>
+				<button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="4" aria-label="Bild 5"></button>
+				<button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="5" aria-label="Bild 6"></button>
+			</div>
+
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<img src="/carousel/2f690db1-e1b6-412d-810a-43240aeb073f.png" class="d-block w-100" alt="Schweizer Nationalmannschaft">
+				</div>
+				<div class="carousel-item">
+					<img src="/carousel/8bf13e19-a38f-4a72-a78c-f27989ac8eb9.png" class="d-block w-100" alt="Schweizer Nationalmannschaft">
+				</div>
+				<div class="carousel-item">
+					<img src="/carousel/9f18c17c-1b92-4588-be2c-0e9a1fc661ae.png" class="d-block w-100" alt="Schweizer Nationalmannschaft">
+				</div>
+				<div class="carousel-item">
+					<img src="/carousel/a8ce05dc-6bbc-407a-a6ac-b3405a5ffdca.png" class="d-block w-100" alt="Schweizer Nationalmannschaft">
+				</div>
+				<div class="carousel-item">
+					<img src="/carousel/f94f194a-4568-4885-ae7f-1a56f9963b1c.png" class="d-block w-100" alt="Schweizer Nationalmannschaft">
+				</div>
+				<div class="carousel-item">
+					<img src="/carousel/ff928d61-588e-4a4a-82cc-976b9048730f.png" class="d-block w-100" alt="Schweizer Nationalmannschaft">
+				</div>
+			</div>
+
+			<button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Zurück</span>
+			</button>
+			<button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Weiter</span>
+			</button>
+		</div>
+	</div>
+</section>
+
+<section class="py-5">
+	<div class="container">
 		<h2 class="text-center mb-5">Was kannst du hier tun?</h2>
 		<div class="row g-4">
 			<div class="col-md-4">
@@ -71,6 +121,32 @@
 </section>
 
 <style>
+	.home-carousel {
+		overflow: hidden;
+		border-radius: 8px;
+		background: #111;
+	}
+
+	.home-carousel .carousel-item {
+		height: 480px;
+		background:
+			linear-gradient(rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.28)),
+			#111;
+	}
+
+	.home-carousel .carousel-item.active {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.home-carousel img {
+		width: 100% !important;
+		height: 100%;
+		object-fit: cover;
+		object-position: center 28%;
+	}
+
 	.feature-card {
 		position: relative;
 		color: inherit;
@@ -97,5 +173,11 @@
 	.feature-card-link:focus-visible {
 		outline: 3px solid var(--swiss-red);
 		outline-offset: 4px;
+	}
+
+	@media (max-width: 768px) {
+		.home-carousel .carousel-item {
+			height: 320px;
+		}
 	}
 </style>

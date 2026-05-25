@@ -414,6 +414,21 @@ Dokumentiert Erweiterungen über den Mindestumfang hinaus.
 - **Aus Evaluation abgeleitet?:**  
   Die Anpassung unterstützt Bedienbarkeit und Präsentation im Video-Walkthrough. Für die finale Abgabe können Screenshots dieser Startseite in die Dokumentation übernommen werden.
 
+### 4.6 Filter- und Sortierfunktion in der Detailsübersicht
+
+- **Beschreibung & Nutzen:**  
+  In der Spieler-Detailsübersicht können die Daten direkt über kleine Dropdowns in den Tabellenköpfen gefiltert und sortiert werden, ähnlich wie in Excel. So können z. B. nur fitte Spieler, verletzte Spieler oder Rechtsfüssler angezeigt werden. Zusätzlich kann nach Namen, Grösse, Geburtsdatum oder Marktwert sortiert werden. Dadurch wird die Übersicht bei vielen Spielern besser nutzbar und unterstützt typische Fragen wie „Wer ist fit?“ oder „Welche Rechtsfüssler stehen zur Verfügung?“.
+
+- **Wo umgesetzt:**  
+  - **Frontend:** `src/routes/players/overview/+page.svelte`
+  - **Logik:** clientseitige Filterung und Sortierung auf Basis der geladenen Spielerdaten
+
+- **Referenz:**  
+  Sichtbar unter dem Navigationspunkt Spieler > Detailsübersicht.
+
+- **Aus Evaluation abgeleitet?:**  
+  Die Erweiterung basiert auf der Beobachtung, dass eine vollständige Tabelle mit allen Spielerdaten bei zunehmender Datenmenge schwerer zu durchsuchen ist. Filter und Sortierung verbessern deshalb Bedienbarkeit und Übersichtlichkeit.
+
 ## 5. Projektorganisation [Optional]
 
 - **Repository & Struktur:**  
@@ -522,3 +537,4 @@ Ein Risiko beim KI-Einsatz ist, dass Code übernommen wird, ohne ihn ausreichend
 - Spielerbilder in Übersicht, Details und Aufstellung integriert
 - Bootstrap-Carousel auf der Startseite ergänzt
 - Startseitenkarten als klickbare Workflows umgesetzt
+- Filter- und Sortierfunktion in der Spieler-Detailsübersicht ergänzt

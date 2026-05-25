@@ -429,6 +429,22 @@ Dokumentiert Erweiterungen über den Mindestumfang hinaus.
 - **Aus Evaluation abgeleitet?:**  
   Die Erweiterung basiert auf der Beobachtung, dass eine vollständige Tabelle mit allen Spielerdaten bei zunehmender Datenmenge schwerer zu durchsuchen ist. Filter und Sortierung verbessern deshalb Bedienbarkeit und Übersichtlichkeit.
 
+### 4.7 Penalty Game
+
+- **Beschreibung & Nutzen:**  
+  Auf der Game-Seite wurde ein kleines Penalty-Spiel umgesetzt. Nutzende wählen einen Feldspieler als Schützen aus. Im Tor steht automatisch ein Spieler mit Position `Goalie`. Der Zielpunkt folgt der Maus im Tor; per Klick wird genau dorthin geschossen. Der Goalie bewegt sich im Leerlauf seitlich im Tor und reagiert beim Schuss automatisch aus seiner aktuellen Position heraus. Zusätzlich wurde die Szene als Pseudo-3D-Ansicht gestaltet: Spielfeld mit Perspektive, animierte CSS-Schützenfigur, sichtbarer Anlauf zum Ball, Startball am Elfmeterpunkt, perspektivisch grösserer Ballstart, sichtbarer Ballflug zur angeklickten Torstelle und Goalie-Bewegung. Nach jedem Schuss kehrt der Ball automatisch zum Elfmeterpunkt zurück. Das Spiel zeigt Tore, Paraden und Versuche an. Dadurch wird die App spielerischer und nutzt die vorhandenen Spielerdaten in einem interaktiven Kontext.
+
+- **Wo umgesetzt:**  
+  - **Frontend:** `src/routes/game/+page.svelte`
+  - **Datenladen:** `src/routes/game/+page.server.js`
+  - **Datenbasis:** Spieler aus der MongoDB-Collection `players`; Goalies werden über die Position `Goalie` erkannt
+
+- **Referenz:**  
+  Sichtbar über den Navigationspunkt `Game`.
+
+- **Aus Evaluation abgeleitet?:**  
+  Nein. Die Erweiterung wurde als zusätzliche, thematisch passende Produktfunktion ergänzt, um den Prototyp interaktiver zu machen und bestehende Daten kreativ weiterzuverwenden.
+
 ## 5. Projektorganisation [Optional]
 
 - **Repository & Struktur:**  
@@ -538,3 +554,4 @@ Ein Risiko beim KI-Einsatz ist, dass Code übernommen wird, ohne ihn ausreichend
 - Bootstrap-Carousel auf der Startseite ergänzt
 - Startseitenkarten als klickbare Workflows umgesetzt
 - Filter- und Sortierfunktion in der Spieler-Detailsübersicht ergänzt
+- Penalty Game mit Schützenwahl, beweglichem automatischem Goalie, Pseudo-3D-Animation, CSS-Schützenfigur, Anlaufanimation, sichtbarem Ballflug, automatischer Ballrückkehr und Punkteanzeige ergänzt

@@ -2,6 +2,7 @@
 	import './lineup.css';
 
 	let { data } = $props();
+	const fallbackPlayerImage = '/players/dummy_v1_rot.png';
 
 	const formations = {
 		'4-3-3': [
@@ -202,7 +203,7 @@
 		const player = getPlayer(playerId);
 
 		if (!player?.lastName) {
-			return '';
+			return fallbackPlayerImage;
 		}
 
 		const lastNameSlug = player.lastName.split(' ')[0].toLowerCase();
@@ -224,7 +225,8 @@
 	}
 
 	function hideMissingImage(event) {
-		event.currentTarget.hidden = true;
+		event.currentTarget.onerror = null;
+		event.currentTarget.src = fallbackPlayerImage;
 	}
 
 	function showLoadedImage(event) {

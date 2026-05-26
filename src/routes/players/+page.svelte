@@ -1,9 +1,11 @@
 <script>
 	let { data } = $props();
 
+	const fallbackPlayerImage = '/players/dummy_v1_rot.png';
+
 	function getPlayerImage(player) {
 		if (!player?.lastName) {
-			return '';
+			return fallbackPlayerImage;
 		}
 
 		const lastNameSlug = player.lastName.split(' ')[0].toLowerCase();
@@ -21,7 +23,8 @@
 	}
 
 	function hideMissingImage(event) {
-		event.currentTarget.hidden = true;
+		event.currentTarget.onerror = null;
+		event.currentTarget.src = fallbackPlayerImage;
 	}
 </script>
 

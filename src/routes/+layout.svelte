@@ -61,16 +61,16 @@
 				<li class="nav-item">
 					<a
 						class="nav-link"
-						class:active={page.url.pathname === '/game'}
-						href="/game"
-					>🎮 Game</a>
+						class:active={page.url.pathname.startsWith('/lineup')}
+						href="/lineup"
+					>Aufstellung</a>
 				</li>
 				<li class="nav-item">
 					<a
 						class="nav-link"
-						class:active={page.url.pathname.startsWith('/lineup')}
-						href="/lineup"
-					>Aufstellung</a>
+						class:active={page.url.pathname === '/game'}
+						href="/game"
+					>🎮 Game</a>
 				</li>
 			</ul>
 		</div>

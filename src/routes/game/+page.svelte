@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 
 	let { data } = $props();
+	const fallbackPlayerImage = '/players/dummy_v1_rot.png';
 
 	const shotZones = [
 		{ id: 'leftTop', label: 'Links oben', className: 'zone-left-top' },
@@ -88,7 +89,7 @@
 
 	function getPlayerImage(player) {
 		if (!player?.lastName) {
-			return '';
+			return fallbackPlayerImage;
 		}
 
 		const lastNameSlug = player.lastName.split(' ')[0].toLowerCase();
@@ -109,7 +110,8 @@
 	}
 
 	function hideMissingImage(event) {
-		event.currentTarget.hidden = true;
+		event.currentTarget.onerror = null;
+		event.currentTarget.src = fallbackPlayerImage;
 	}
 
 	function clamp(value, min, max) {

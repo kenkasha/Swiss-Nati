@@ -32,7 +32,7 @@ async function getPlayer(id) {
 
 async function getGames() {
 	const collection = db.collection('games');
-	const games = await collection.find({}).sort({ date: 1 }).toArray();
+	const games = await collection.find({}).sort({ date: -1 }).toArray();
 
 	games.forEach((game) => {
 		game._id = game._id.toString();

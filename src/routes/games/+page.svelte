@@ -98,6 +98,11 @@
 								<a href={`/lineup?gameId=${game._id}`} class="btn btn-sm btn-outline-secondary">
 									{pastGame ? 'Aufstellung ansehen' : 'Zur Aufstellung'}
 								</a>
+								{#if pastGame}
+									<a href="/games/results" class="btn btn-sm btn-outline-light">
+										Resultat
+									</a>
+								{/if}
 								{#if !pastGame}
 									<a href={`/games/${game._id}/edit`} class="btn btn-sm btn-outline-primary">
 										Bearbeiten

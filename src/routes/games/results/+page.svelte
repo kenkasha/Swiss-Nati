@@ -269,14 +269,14 @@
 	.scorers {
 		display: flex;
 		flex-direction: column;
-		align-items: flex-start;
-		width: min(100%, 260px);
+		align-items: center;
+		width: 100%;
 		min-height: 96px;
 		margin-top: 16px;
 		color: #c6ccd2;
 		font-size: 0.95rem;
 		line-height: 1.35;
-		text-align: left;
+		text-align: center;
 	}
 
 	.team-event-row {
@@ -318,11 +318,11 @@
 	.event-board > div {
 		display: flex;
 		flex-direction: column;
-		align-items: flex-start;
+		align-items: center;
 		justify-self: center;
-		width: min(100%, 260px);
+		width: 100%;
 		min-height: 72px;
-		text-align: left;
+		text-align: center;
 	}
 
 	.event-board-spacer {
@@ -333,7 +333,7 @@
 		display: flex;
 		align-items: center;
 		gap: 7px;
-		justify-content: flex-start;
+		justify-content: center;
 		width: 100%;
 		min-height: 1.35em;
 		line-height: 1.35;
@@ -341,7 +341,7 @@
 	}
 
 	.event-row-away {
-		justify-content: flex-start;
+		justify-content: center;
 	}
 
 	.event-icon {
@@ -406,8 +406,8 @@
 		}
 
 		.event-row-away {
-			justify-content: flex-start;
-			flex-direction: row-reverse;
+			justify-content: center;
+			flex-direction: row;
 		}
 
 		.result-footer {

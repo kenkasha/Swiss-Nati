@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="420" viewBox="0 0 980 420" role="img" aria-labelledby="title desc" content="&lt;mxfile host=&quot;app.diagrams.net&quot; modified=&quot;2026-06-05T00:00:00.000Z&quot; agent=&quot;Codex&quot; version=&quot;26.0.0&quot;&gt;&lt;diagram id=&quot;flow&quot; name=&quot;Page-1&quot;&gt;7ZnRbqM4FIafxpeV4Dil7WWbNK006mi1WWmuHTgBq8ZmzKGhffqVwaQQkpnRbJjZjJor/Bsb/J/P9sFhfJ7XD1YU2ZNJUDEIkprxBQO4uQ4YgBNeW2EGXkitTFopfBdW8g292N1WyQTLwY1kjCJZDMXYaI0xDTRhrdkOb9sYNXxqIVIcCatYqLH6RSaU7Q3L6Y8o04z2hpeL7l4vlJlIzLYn8XvG59YYaq/yeo7KWdfZ0rZbHqndvZdFTT/SgCQpbBu9CFX54a22siwZBJ8FSQbBk6A4S8Rrc6lFipZBcMEgeENN1pkCwRdjnzfKGduOi147rwhrYvwuo1wxvggZvyvJmmecG2Us4wttNDJ+t5FK7UtGk489BF3Zdxz6cteEAYcAZiAYv/PjQUtYH/Ul3Lmd1w9ociTrBugb8Kht4fmEWVvcvgd7duVDmPUCzb0mPF/pruP3GDBY+jAcDklm8nFEHhsxUs7JtWUQpdQMtFWcEQPTo6+V6SouysbCWwZBCEXdNvP1XUf3UpckMe06ZLBs++yesxdTayqdYOLjsM0k4aoQsavdWlEMwy1s7KMYwl6gGfBN8xtRwYAnl7AOcVfTTTQ4QkL3jOg0BMyCAQFhF+4eAiE/gMDVCRAolHhFW47nZSFRudk3GQhCv6FMUTOYMwjQloRKdcU1CrtGSa78wUndLQ2XA1AOcXJoqbg+ASepyPEYJRNCUiihd4gkkiTarqgMlnH2Acg3AAmvfzEhI0D+Qi0UuVd8EJNuK1ITWvFM8sWlCPd26xYPW+mPfeY4HnDzC/EwL2hfJG5HiCyQhFRlhWu0pYwzmjL5qGNUF0upqEksK50wCFbGunXlt7FytYn+f6xchsF395qbiVCxWFaKxrvN340uaMp1ZBUbi+0G88/u6pOwvy0TOQs6Dm40U+GhpMaqGNFxW22aFLI3j6fgw2U8LRVLY3NB0vh8ZC9j/qAErqIfoGSq/Qb962IyOl/Ze38ISlPZGPe/iUnYFOnAZ1IviqiTW3fIw/hirUz8/K3TBwZcXEMYRqN4cO/32EmLSjQ5zeBY6b/YAqe0pfdVcNam8FOb8gd4Mvs5TwYzpW/LMAE8a2suf86a3mzpGzNId87al+ikvvT3+TOyhcHy/VC9qev9McHv/wU=&lt;/diagram&gt;&lt;/mxfile&gt;">
+	<title id="title">User Flow Swiss Nati Matchday Manager</title>
+	<desc id="desc">Vereinfachter End-to-End Ablauf von der Startseite zu Spieler-, Spiele-, Resultate- und Aufstellungsfunktionen.</desc>
+	<style>
+		.node { fill: #ffffff; stroke: #d52b1e; stroke-width: 2; rx: 12; }
+		.alt { fill: #fff7f6; stroke: #d52b1e; stroke-width: 2; rx: 12; }
+		.text { font-family: Arial, sans-serif; fill: #20242a; font-size: 16px; font-weight: 700; }
+		.small { font-family: Arial, sans-serif; fill: #3c4652; font-size: 13px; }
+		.arrow { stroke: #a82116; stroke-width: 3; fill: none; marker-end: url(#arrowhead); }
+	</style>
+	<defs>
+		<marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+			<polygon points="0 0, 10 3.5, 0 7" fill="#a82116" />
+		</marker>
+	</defs>
+	<text x="36" y="48" class="text">Swiss Nati Matchday Manager - zentrale Workflows</text>
+	<rect x="40" y="170" width="130" height="70" class="node" />
+	<text x="82" y="200" class="text">Home</text>
+	<text x="62" y="222" class="small">Einstieg</text>
+	<rect x="245" y="70" width="170" height="80" class="node" />
+	<text x="285" y="104" class="text">Spieler</text>
+	<text x="268" y="128" class="small">anzeigen, erstellen, bearbeiten</text>
+	<rect x="245" y="180" width="170" height="80" class="node" />
+	<text x="284" y="214" class="text">Spiele</text>
+	<text x="270" y="238" class="small">planen, editieren, löschen</text>
+	<rect x="245" y="290" width="170" height="80" class="node" />
+	<text x="280" y="324" class="text">Penalty Game</text>
+	<text x="270" y="348" class="small">interaktive Erweiterung</text>
+	<rect x="510" y="70" width="190" height="80" class="alt" />
+	<text x="532" y="104" class="text">Detailsübersicht</text>
+	<text x="532" y="128" class="small">Excel-Filter und Sortierung</text>
+	<rect x="510" y="180" width="190" height="80" class="alt" />
+	<text x="558" y="214" class="text">Resultate</text>
+	<text x="540" y="238" class="small">Score, Tore, Karten</text>
+	<rect x="760" y="180" width="170" height="80" class="alt" />
+	<text x="802" y="214" class="text">Aufstellung</text>
+	<text x="785" y="238" class="small">Spiel, Formation, Spieler</text>
+	<path d="M170 205 C205 205 210 110 245 110" class="arrow" />
+	<path d="M170 205 H245" class="arrow" />
+	<path d="M170 205 C205 205 210 330 245 330" class="arrow" />
+	<path d="M415 110 H510" class="arrow" />
+	<path d="M415 220 H510" class="arrow" />
+	<path d="M700 220 H760" class="arrow" />
+	<path d="M415 220 C485 220 690 220 760 220" class="arrow" opacity="0.35" />
+</svg>

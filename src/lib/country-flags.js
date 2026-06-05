@@ -382,10 +382,14 @@ function countryCodeToFlagUrl(countryCode) {
 
 function toDisplayName(countryName) {
 	const lowercaseWords = new Set(['and', 'of', 'the']);
+	const uppercaseWords = new Set(['usa']);
 
 	return countryName
 		.split(' ')
 		.map((part, index) =>
+			uppercaseWords.has(part)
+				? part.toUpperCase()
+				:
 			index > 0 && lowercaseWords.has(part)
 				? part
 				: part.charAt(0).toUpperCase() + part.slice(1)

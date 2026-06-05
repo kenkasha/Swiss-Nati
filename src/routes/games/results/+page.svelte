@@ -206,6 +206,7 @@
 		border-radius: 18px;
 		padding: 28px;
 		box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+		overflow: hidden;
 	}
 
 	.result-meta {
@@ -223,17 +224,24 @@
 
 	.scoreline {
 		display: grid;
-		grid-template-columns: 1fr auto 1fr;
+		grid-template-columns: minmax(0, 1fr) 220px minmax(0, 1fr);
 		align-items: start;
 		gap: 28px;
 		padding: 28px 0;
 	}
 
 	.team {
+		display: grid;
+		grid-template-rows: 68px auto minmax(96px, auto);
+		justify-items: center;
 		text-align: center;
+		min-width: 0;
 	}
 
 	.team-flag {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		min-height: 58px;
 		margin-bottom: 10px;
 	}
@@ -255,13 +263,15 @@
 	.team-name {
 		font-size: 1.3rem;
 		font-weight: 700;
+		min-height: 1.65rem;
 	}
 
 	.scorers {
-		display: inline-flex;
+		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		min-height: 34px;
+		width: min(100%, 260px);
+		min-height: 96px;
 		margin-top: 16px;
 		color: #c6ccd2;
 		font-size: 0.95rem;
@@ -279,8 +289,10 @@
 		gap: 34px;
 		font-size: clamp(2.5rem, 7vw, 4.5rem);
 		font-weight: 700;
-		min-width: 220px;
+		width: 220px;
 		justify-content: center;
+		align-self: start;
+		padding-top: 28px;
 	}
 
 	.score-divider {
@@ -294,7 +306,7 @@
 
 	.event-board {
 		display: grid;
-		grid-template-columns: 1fr 220px 1fr;
+		grid-template-columns: minmax(0, 1fr) 220px minmax(0, 1fr);
 		gap: 28px;
 		border-top: 1px solid rgba(255, 255, 255, 0.08);
 		padding-top: 18px;
@@ -304,11 +316,17 @@
 	}
 
 	.event-board > div {
-		display: inline-flex;
+		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
 		justify-self: center;
+		width: min(100%, 260px);
+		min-height: 72px;
 		text-align: left;
+	}
+
+	.event-board-spacer {
+		width: 220px;
 	}
 
 	.event-row {
@@ -316,6 +334,7 @@
 		align-items: center;
 		gap: 7px;
 		justify-content: flex-start;
+		width: 100%;
 		min-height: 1.35em;
 		line-height: 1.35;
 		white-space: nowrap;
@@ -371,6 +390,15 @@
 		.scoreline,
 		.event-board {
 			grid-template-columns: 1fr;
+		}
+
+		.team {
+			grid-template-rows: auto auto auto;
+		}
+
+		.score {
+			width: 100%;
+			padding-top: 0;
 		}
 
 		.event-board-spacer {

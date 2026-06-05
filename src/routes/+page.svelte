@@ -2,8 +2,12 @@
 	<div class="container py-5">
 		<div class="row align-items-center">
 			<div class="col-lg-8">
-				<h1 class="display-3 fw-bold mb-3">
-					🇨🇭 Schweizer Nationalmannschaft
+				<h1 class="home-hero-title display-3 fw-bold mb-3">
+					<span class="home-hero-title-text">
+						<span>Schweizer</span>
+						<span>Nationalmannschaft</span>
+					</span>
+					<img class="home-hero-logo" src="/logo/SFV_Logo_sw.webp" alt="SFV Logo">
 				</h1>
 				<p class="lead mb-4">
 					Verwalte Spieler, Spiele und Kader-Aufstellungen der Schweizer Fussball-Nationalmannschaft
@@ -12,10 +16,10 @@
 				</p>
 				<div class="d-flex gap-3 flex-wrap">
 					<a href="/players" class="btn btn-light btn-lg fw-semibold">
-						👥 Zur Spielerliste
+						Zur Spielerliste
 					</a>
 					<a href="/games" class="btn btn-outline-light btn-lg fw-semibold">
-						⚽ Zur Spieleliste
+						Zur Spieleliste
 					</a>
 				</div>
 			</div>
@@ -125,6 +129,40 @@
 		overflow: hidden;
 		border-radius: 8px;
 		background: #111;
+	}
+
+	.home-hero-title {
+		position: relative;
+		display: inline-block;
+		padding-right: 2em;
+	}
+
+	.home-hero-title-text {
+		display: flex;
+		flex-direction: column;
+		line-height: 1.05;
+	}
+
+	.home-hero-logo {
+		position: absolute;
+		top: 0.02em;
+		left: 4.22em;
+		width: 2.45em;
+		height: auto;
+		mix-blend-mode: multiply;
+	}
+
+	@media (max-width: 768px) {
+		.home-hero-title {
+			padding-right: 0;
+		}
+
+		.home-hero-logo {
+			position: static;
+			display: block;
+			width: 92px;
+			margin-top: 0.75rem;
+		}
 	}
 
 	.home-carousel .carousel-item {

@@ -98,7 +98,10 @@
 			<h1 class="fw-bold mb-1">Resultate</h1>
 			<p class="text-muted mb-0">Vergangene Spiele der Schweizer Nationalmannschaft</p>
 		</div>
-		<a href="/games" class="btn btn-outline-primary">Zur Spieleliste</a>
+		<div class="d-flex align-items-center gap-4">
+			<img class="title-sfv-logo" src="/logo/SFV_Logo_rgb.webp" alt="SFV Logo">
+			<a href="/games" class="btn btn-outline-primary">Zur Spieleliste</a>
+		</div>
 	</div>
 
 	{#if pastGames.length === 0}

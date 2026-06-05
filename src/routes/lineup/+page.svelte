@@ -260,11 +260,14 @@
 </svelte:head>
 
 <div class="container py-5">
-	<div class="mb-4">
-		<h1 class="fw-bold mb-1">📋 Matchday-Aufstellung</h1>
-		<p class="text-muted mb-0">
-			Wähle ein Spiel, eine Formation und stelle dafür die Startelf der Schweizer Nationalmannschaft zusammen.
-		</p>
+	<div class="d-flex justify-content-between align-items-center gap-4 mb-4">
+		<div>
+			<h1 class="fw-bold mb-1">Matchday-Aufstellung</h1>
+			<p class="text-muted mb-0">
+				Wähle ein Spiel, eine Formation und stelle dafür die Startelf der Schweizer Nationalmannschaft zusammen.
+			</p>
+		</div>
+		<img class="title-sfv-logo" src="/logo/SFV_Logo_rgb.webp" alt="SFV Logo">
 	</div>
 
 	{#if data.games.length === 0}

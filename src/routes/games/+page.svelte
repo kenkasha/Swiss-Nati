@@ -37,12 +37,15 @@
 <div class="container py-5">
 	<div class="d-flex justify-content-between align-items-center mb-4">
 		<div>
-			<h1 class="fw-bold mb-1">⚽ Spiele</h1>
+			<h1 class="fw-bold mb-1">Spiele</h1>
 			<p class="text-muted mb-0">Alle Spiele der Schweizer Nationalmannschaft</p>
 		</div>
-		<a href="/games/create" class="btn btn-primary">
-			+ Neues Spiel
-		</a>
+		<div class="d-flex align-items-center gap-4">
+			<img class="title-sfv-logo" src="/logo/SFV_Logo_rgb.webp" alt="SFV Logo">
+			<a href="/games/create" class="btn btn-primary">
+				+ Neues Spiel
+			</a>
+		</div>
 	</div>
 
 	{#if data.games.length === 0}
@@ -92,11 +95,11 @@
 							</p>
 
 							<div class="game-actions">
-								<a href={`/lineup?gameId=${game._id}`} class="btn btn-outline-secondary">
+								<a href={`/lineup?gameId=${game._id}`} class="btn btn-sm btn-outline-secondary">
 									{pastGame ? 'Aufstellung ansehen' : 'Zur Aufstellung'}
 								</a>
 								{#if !pastGame}
-									<a href={`/games/${game._id}/edit`} class="btn btn-outline-primary">
+									<a href={`/games/${game._id}/edit`} class="btn btn-sm btn-outline-primary">
 										Bearbeiten
 									</a>
 								{/if}
@@ -106,7 +109,7 @@
 									onsubmit={askDeleteConfirmation}
 								>
 									<input type="hidden" name="gameId" value={game._id}>
-									<button type="submit" class="btn btn-outline-danger">Löschen</button>
+									<button type="submit" class="btn btn-sm btn-outline-danger">Löschen</button>
 								</form>
 							</div>
 							{#if pastGame && !game.hasLineup}
@@ -169,8 +172,19 @@
 
 	.game-actions {
 		display: flex;
-		gap: 8px;
+		justify-content: flex-end;
+		align-items: center;
+		gap: 6px;
 		flex-wrap: wrap;
+		margin-top: 22px;
+		font-size: 0.86rem;
+	}
+
+	.game-actions .btn {
+		font-size: 0.86rem;
+		font-weight: 500;
+		line-height: 1.2;
+		padding: 0.34rem 0.65rem;
 	}
 
 	.matchup-flag {

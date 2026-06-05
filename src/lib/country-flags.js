@@ -381,9 +381,15 @@ function countryCodeToFlagUrl(countryCode) {
 }
 
 function toDisplayName(countryName) {
+	const lowercaseWords = new Set(['and', 'of', 'the']);
+
 	return countryName
 		.split(' ')
-		.map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+		.map((part, index) =>
+			index > 0 && lowercaseWords.has(part)
+				? part
+				: part.charAt(0).toUpperCase() + part.slice(1)
+		)
 		.join(' ');
 }
 
@@ -408,6 +414,11 @@ const opponentCountryNames = new Set(opponentCountries.map((country) => normaliz
 
 export function getCountryCode(country) {
 	return countryCodes[normalizeCountryName(country)] ?? '';
+}
+
+export function getCountryDisplayName(country) {
+	const countryCode = getCountryCode(country);
+	return countryNamesByCode.get(countryCode) ?? country;
 }
 
 export function isSelectableOpponent(country) {

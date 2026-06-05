@@ -37,12 +37,15 @@
 	<!-- Seitenkopf mit Titel und "Neuer Spieler"-Button -->
 	<div class="d-flex justify-content-between align-items-center mb-4">
 		<div>
-			<h1 class="fw-bold mb-1">👥 Spieler</h1>
+			<h1 class="fw-bold mb-1">Spieler</h1>
 			<p class="text-muted mb-0">Alle Spieler der Schweizer Nationalmannschaft</p>
 		</div>
-		<a href="/players/create" class="btn btn-primary">
-			+ Neuer Spieler
-		</a>
+		<div class="d-flex align-items-center gap-4">
+			<img class="title-sfv-logo" src="/logo/SFV_Logo_rgb.webp" alt="SFV Logo">
+			<a href="/players/create" class="btn btn-primary">
+				+ Neuer Spieler
+			</a>
+		</div>
 	</div>
 
 {#if data.players.length === 0}

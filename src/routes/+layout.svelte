@@ -142,4 +142,16 @@
 	.swiss-footer {
 		background-color: var(--swiss-red-dark);
 	}
+
+	:global(.title-sfv-logo) {
+		flex: 0 0 auto;
+		width: clamp(82px, 7vw, 124px);
+		height: auto;
+	}
+
+	@media (max-width: 575.98px) {
+		:global(.title-sfv-logo) {
+			width: 64px;
+		}
+	}
 </style>

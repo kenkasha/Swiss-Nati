@@ -1,17 +1,18 @@
 <script>
 	let { data } = $props();
 	let filterValues = $state({
-		name: '',
-		position: '',
-		club: '',
-		status: '',
-		heightCm: '',
-		birthDate: '',
-		marketValueLabel: '',
-		preferredFoot: ''
+		name: [],
+		position: [],
+		club: [],
+		status: [],
+		heightCm: [],
+		birthDate: [],
+		marketValueLabel: [],
+		preferredFoot: []
 	});
 	let sortKey = $state('name');
 	let sortDirection = $state('asc');
+	let openFilterKey = $state('');
 
 	const labels = {
 		name: 'Name',
@@ -54,6 +55,12 @@
 	}
 
 	function getFilterOptions(key) {
+		if (key === 'birthDate') {
+			return [...new Set(data.players.map((player) => getBirthYear(player.birthDate)).filter(Boolean))].sort(
+				(a, b) => String(a).localeCompare(String(b), 'de-CH', { numeric: true })
+			);
+		}
+
 		return [...new Set(data.players.map((player) => getColumnValue(player, key)).filter(Boolean))].sort(
 			(a, b) => String(a).localeCompare(String(b), 'de-CH', { numeric: true })
 		);
@@ -99,6 +106,14 @@
 		return formatValue(key, player[key]);
 	}
 
+	function getFilterValue(player, key) {
+		if (key === 'birthDate') {
+			return getBirthYear(player.birthDate);
+		}
+
+		return getColumnValue(player, key);
+	}
+
 	function getDateTime(value) {
 		if (!value) {
 			return 0;
@@ -113,6 +128,11 @@
 		}
 
 		return new Date(value).getTime();
+	}
+
+	function getBirthYear(value) {
+		const timestamp = getDateTime(value);
+		return timestamp ? String(new Date(timestamp).getFullYear()) : '';
 	}
 
 	function getMarketNumber(value) {
@@ -133,7 +153,7 @@
 	function getFilteredPlayers() {
 		const players = data.players.filter((player) => {
 			return Object.entries(filterValues).every(([key, value]) => {
-				return !value || getColumnValue(player, key) === value;
+				return value.length === 0 || value.includes(getFilterValue(player, key));
 			});
 		});
 
@@ -162,30 +182,78 @@
 
 	function resetFilters() {
 		for (const key of Object.keys(filterValues)) {
-			filterValues[key] = '';
+			filterValues[key] = [];
 		}
 
 		sortKey = 'name';
 		sortDirection = 'asc';
+		openFilterKey = '';
 	}
 
-	function handleColumnAction(key, event) {
-		const value = event.currentTarget.value;
+	function sortColumn(key, direction) {
+		sortKey = key;
+		sortDirection = direction;
+		openFilterKey = '';
+	}
 
-		if (value === 'sort-asc' || value === 'sort-desc') {
-			sortKey = key;
-			sortDirection = value === 'sort-desc' ? 'desc' : 'asc';
-			event.currentTarget.value = filterValues[key];
-			return;
-		}
+	function toggleFilterOption(key, option, checked) {
+		const selectedValues = filterValues[key] ?? [];
+		filterValues[key] = checked
+			? [...selectedValues, option]
+			: selectedValues.filter((value) => value !== option);
+	}
 
-		filterValues[key] = value;
+	function isFilterActive(key) {
+		return filterValues[key]?.length > 0;
+	}
+
+	function isFilterOptionSelected(key, option) {
+		const selectedValues = filterValues[key] ?? [];
+		return selectedValues.includes(option);
+	}
+
+	function areAllFilterOptionsSelected(key) {
+		const options = getFilterOptions(key);
+		const selectedValues = filterValues[key] ?? [];
+		return options.length > 0 && selectedValues.length === options.length;
+	}
+
+	function toggleAllFilterOptions(key, checked) {
+		filterValues[key] = checked ? getFilterOptions(key) : [];
+	}
+
+	function toggleFilterMenu(key) {
+		openFilterKey = openFilterKey === key ? '' : key;
 	}
 </script>
+
+<svelte:window
+	onclick={(event) => {
+		if (!event.target.closest?.('.column-filter')) {
+			openFilterKey = '';
+		}
+	}}
+	onkeydown={(event) => {
+		if (event.key === 'Escape') {
+			openFilterKey = '';
+		}
+	}}
+/>
 
 <svelte:head>
 	<title>Detailsübersicht · Swiss Nati</title>
 </svelte:head>
+
+{#if openFilterKey}
+	<button
+		type="button"
+		class="filter-backdrop"
+		aria-label="Filtermenü schliessen"
+		onclick={() => {
+			openFilterKey = '';
+		}}
+	></button>
+{/if}
 
 <div class="container-fluid py-5 px-4">
 	<div class="d-flex justify-content-between align-items-center mb-4">
@@ -193,7 +261,10 @@
 			<h1 class="fw-bold mb-1">Detailsübersicht</h1>
 			<p class="text-muted mb-0">Alle Spieler mit allen gespeicherten Daten</p>
 		</div>
-		<a href="/players" class="btn btn-outline-primary">Zur Spielerliste</a>
+		<div class="d-flex align-items-center gap-4">
+			<img class="title-sfv-logo" src="/logo/SFV_Logo_rgb.webp" alt="SFV Logo">
+			<a href="/players" class="btn btn-outline-primary">Zur Spielerliste</a>
+		</div>
 	</div>
 
 	{#if data.players.length === 0}
@@ -228,21 +299,40 @@
 						<th>
 							<div class="column-head name-head">
 								<span>Name</span>
-								<select
-									class:active-control={filterValues.name}
-									class="column-control"
-									aria-label="Name filtern oder sortieren"
-									value={filterValues.name}
-									onchange={(event) => handleColumnAction('name', event)}
-								>
-									<option value="">▾</option>
-									<option value="sort-asc">Sortieren A-Z</option>
-									<option value="sort-desc">Sortieren Z-A</option>
-									<option disabled>────────</option>
-									{#each getFilterOptions('name') as option}
-										<option value={option}>{option}</option>
-									{/each}
-								</select>
+								<div class="column-filter" class:active-control={isFilterActive('name')}>
+									<button
+										type="button"
+										class="column-control"
+										aria-label="Name filtern oder sortieren"
+										aria-expanded={openFilterKey === 'name'}
+										onclick={() => toggleFilterMenu('name')}
+									>▾</button>
+									{#if openFilterKey === 'name'}
+									<div class="filter-menu">
+										<button type="button" class="filter-sort" onclick={() => sortColumn('name', 'asc')}>Sortieren A-Z</button>
+										<button type="button" class="filter-sort" onclick={() => sortColumn('name', 'desc')}>Sortieren Z-A</button>
+										<div class="filter-separator"></div>
+										<label class="filter-option">
+											<input
+												type="checkbox"
+												checked={areAllFilterOptionsSelected('name')}
+												onchange={(event) => toggleAllFilterOptions('name', event.currentTarget.checked)}
+											>
+											<span>(Alles auswählen)</span>
+										</label>
+										{#each getFilterOptions('name') as option}
+											<label class="filter-option">
+												<input
+													type="checkbox"
+													checked={isFilterOptionSelected('name', option)}
+													onchange={(event) => toggleFilterOption('name', option, event.currentTarget.checked)}
+												>
+												<span>{option}</span>
+											</label>
+										{/each}
+									</div>
+									{/if}
+								</div>
 							</div>
 						</th>
 						{#each columns as column}
@@ -250,21 +340,40 @@
 								<th>
 									<div class={`column-head ${column}-head`}>
 										<span>{getLabel(column)}</span>
-										<select
-											class:active-control={filterValues[column]}
-											class="column-control"
-											aria-label={`${getLabel(column)} filtern oder sortieren`}
-											value={filterValues[column]}
-											onchange={(event) => handleColumnAction(column, event)}
-										>
-											<option value="">▾</option>
-											<option value="sort-asc">Sortieren aufsteigend</option>
-											<option value="sort-desc">Sortieren absteigend</option>
-											<option disabled>────────</option>
-											{#each getFilterOptions(column) as option}
-												<option value={option}>{option}</option>
-											{/each}
-										</select>
+										<div class="column-filter" class:active-control={isFilterActive(column)}>
+											<button
+												type="button"
+												class="column-control"
+												aria-label={`${getLabel(column)} filtern oder sortieren`}
+												aria-expanded={openFilterKey === column}
+												onclick={() => toggleFilterMenu(column)}
+											>▾</button>
+											{#if openFilterKey === column}
+											<div class="filter-menu">
+												<button type="button" class="filter-sort" onclick={() => sortColumn(column, 'asc')}>Sortieren aufsteigend</button>
+												<button type="button" class="filter-sort" onclick={() => sortColumn(column, 'desc')}>Sortieren absteigend</button>
+												<div class="filter-separator"></div>
+												<label class="filter-option">
+													<input
+														type="checkbox"
+														checked={areAllFilterOptionsSelected(column)}
+														onchange={(event) => toggleAllFilterOptions(column, event.currentTarget.checked)}
+													>
+													<span>(Alles auswählen)</span>
+												</label>
+												{#each getFilterOptions(column) as option}
+													<label class="filter-option">
+														<input
+															type="checkbox"
+															checked={isFilterOptionSelected(column, option)}
+															onchange={(event) => toggleFilterOption(column, option, event.currentTarget.checked)}
+														>
+														<span>{option}</span>
+													</label>
+												{/each}
+											</div>
+											{/if}
+										</div>
 									</div>
 								</th>
 							{/if}
@@ -296,10 +405,11 @@
 
 <style>
 	.overview-table-wrap {
+		position: relative;
 		border-radius: 8px;
 		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 		overflow-x: auto;
-		overflow-y: hidden;
+		overflow-y: visible;
 		display: block;
 		max-width: 100%;
 	}
@@ -312,6 +422,7 @@
 	}
 
 	.column-head {
+		position: relative;
 		display: flex;
 		align-items: center;
 		gap: 0.25rem;
@@ -319,8 +430,16 @@
 		min-width: 0;
 	}
 
-	.column-control {
+	.column-filter {
+		position: relative;
 		flex: 0 0 auto;
+		z-index: 40;
+	}
+
+	.column-control {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
 		width: 1.55rem;
 		height: 1.45rem;
 		padding: 0;
@@ -329,14 +448,84 @@
 		border-radius: 2px;
 		background-color: #f8f9fa;
 		cursor: pointer;
+		user-select: none;
 	}
 
-	.active-control {
+	.active-control .column-control {
 		border-color: var(--swiss-red);
 		background-color: #fff3f2;
 	}
 
-	th,
+	.filter-menu {
+		position: absolute;
+		top: calc(100% + 0.35rem);
+		right: 0;
+		z-index: 50;
+		width: max-content;
+		min-width: 13rem;
+		max-width: 18rem;
+		max-height: 18rem;
+		overflow-y: auto;
+		padding: 0.45rem;
+		border: 1px solid #c7cdd4;
+		border-radius: 6px;
+		background: white;
+		box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+		color: #111827;
+	}
+
+	.filter-backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 35;
+		border: 0;
+		background: transparent;
+		cursor: default;
+	}
+
+	.filter-sort {
+		display: block;
+		width: 100%;
+		padding: 0.35rem 0.45rem;
+		border: 0;
+		border-radius: 4px;
+		background: transparent;
+		text-align: left;
+		white-space: nowrap;
+	}
+
+	.filter-sort:hover {
+		background: #f1f3f5;
+	}
+
+	.filter-separator {
+		height: 1px;
+		margin: 0.35rem 0;
+		background: #d7dce1;
+	}
+
+	.filter-option {
+		display: flex;
+		align-items: center;
+		gap: 0.45rem;
+		padding: 0.3rem 0.45rem;
+		border-radius: 4px;
+		font-weight: 400;
+		white-space: nowrap;
+		cursor: pointer;
+	}
+
+	.filter-option:hover {
+		background: #f8f9fa;
+	}
+
+	th {
+		min-width: 0;
+		padding: 0.38rem 0.35rem;
+		overflow: visible;
+		white-space: nowrap;
+	}
+
 	td {
 		min-width: 0;
 		padding: 0.38rem 0.35rem;

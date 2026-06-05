@@ -1,5 +1,6 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { DB_URI } from '$env/static/private';
+import { getCountryDisplayName } from '$lib/country-flags';
 
 const client = new MongoClient(DB_URI);
 await client.connect();
@@ -35,6 +36,7 @@ async function getGames() {
 
 	games.forEach((game) => {
 		game._id = game._id.toString();
+		game.opponent = getCountryDisplayName(game.opponent);
 	});
 
 	return games;
@@ -49,6 +51,7 @@ async function getGame(id) {
 	}
 
 	game._id = game._id.toString();
+	game.opponent = getCountryDisplayName(game.opponent);
 	return game;
 }
 

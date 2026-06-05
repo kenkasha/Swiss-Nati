@@ -1,5 +1,6 @@
 import db from '$lib/server/db';
 import { isPastDate } from '$lib/date';
+import { isSelectableOpponent } from '$lib/country-flags';
 import { error, fail, redirect } from '@sveltejs/kit';
 
 export async function load({ params }) {
@@ -32,13 +33,18 @@ export const actions = {
 
 		const formData = await request.formData();
 		const date = formData.get('date');
+		const opponent = formData.get('opponent');
 
 		if (isPastDate(date)) {
 			return fail(400, { error: 'Das Spiel darf nicht in die Vergangenheit verschoben werden.' });
 		}
 
+		if (!isSelectableOpponent(opponent)) {
+			return fail(400, { error: 'Bitte wähle einen gültigen Gegner aus.' });
+		}
+
 		const game = {
-			opponent: formData.get('opponent'),
+			opponent,
 			date,
 			location: formData.get('location'),
 			competition: formData.get('competition')

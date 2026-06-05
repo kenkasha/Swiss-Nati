@@ -1,5 +1,6 @@
 <script>
 	import { getTodayDateInputValue } from '$lib/date';
+	import { opponentCountries } from '$lib/country-flags';
 
 	let { data, form } = $props();
 
@@ -22,7 +23,12 @@
 
 		<div class="mb-3">
 			<label for="opponent" class="form-label">Gegner</label>
-			<input id="opponent" name="opponent" type="text" class="form-control" value={game.opponent} required>
+			<select id="opponent" name="opponent" class="form-select" required>
+				<option value="">Bitte wählen</option>
+				{#each opponentCountries as country}
+					<option value={country.name} selected={game.opponent === country.name}>{country.name}</option>
+				{/each}
+			</select>
 		</div>
 
 		<div class="mb-3">

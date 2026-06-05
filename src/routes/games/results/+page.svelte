@@ -1,5 +1,7 @@
 <script>
 	import { isPastDate } from '$lib/date';
+	import { getEnrichedMatchResult } from '$lib/match-results';
+	import { getCountryFlag } from '$lib/country-flags';
 
 	let { data } = $props();
 
@@ -15,12 +17,8 @@
 
 	const scoringTypes = new Set(['goal', 'ownGoal']);
 
-	const opponentFlags = {
-		USA: '/flags/usa.svg'
-	};
-
 	function getResult(game) {
-		return typeof game.result === 'object' && game.result ? game.result : null;
+		return getEnrichedMatchResult(game);
 	}
 
 	function getSwissGoals(game) {
@@ -39,7 +37,7 @@
 		return {
 			key: 'switzerland',
 			name: 'Switzerland',
-			flag: '/flags/switzerland.svg',
+			flag: getCountryFlag('Switzerland'),
 			goals: getSwissGoals(game)
 		};
 	}
@@ -48,7 +46,7 @@
 		return {
 			key: 'opponent',
 			name: game.opponent,
-			flag: opponentFlags[game.opponent] ?? '',
+			flag: getCountryFlag(game.opponent),
 			goals: getOpponentGoals(game)
 		};
 	}
@@ -121,8 +119,10 @@
 					<div class="scoreline">
 						<div class="team">
 							<div class="team-flag">
-								{#if home.flag}
-									<img src={home.flag} alt={`${home.name} Flagge`}>
+								{#if home.flag.url}
+									<img src={home.flag.url} alt={`${home.name} Flagge`}>
+								{:else if home.flag.emoji}
+									<span class="team-flag-emoji" aria-label={`${home.name} Flagge`}>{home.flag.emoji}</span>
 								{/if}
 							</div>
 							<div class="team-name">{home.name}</div>
@@ -145,8 +145,10 @@
 
 						<div class="team">
 							<div class="team-flag">
-								{#if away.flag}
-									<img src={away.flag} alt={`${away.name} Flagge`}>
+								{#if away.flag.url}
+									<img src={away.flag.url} alt={`${away.name} Flagge`}>
+								{:else if away.flag.emoji}
+									<span class="team-flag-emoji" aria-label={`${away.name} Flagge`}>{away.flag.emoji}</span>
 								{/if}
 							</div>
 							<div class="team-name">{away.name}</div>
@@ -241,6 +243,12 @@
 		box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
 	}
 
+	.team-flag-emoji {
+		display: inline-block;
+		font-size: 58px;
+		line-height: 1;
+	}
+
 	.team-name {
 		font-size: 1.3rem;
 		font-weight: 700;
@@ -304,9 +312,9 @@
 		display: flex;
 		align-items: center;
 		gap: 7px;
-		margin-bottom: 8px;
 		justify-content: flex-start;
 		min-height: 1.35em;
+		line-height: 1.35;
 		white-space: nowrap;
 	}
 

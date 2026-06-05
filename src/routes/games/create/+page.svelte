@@ -1,5 +1,6 @@
 <script>
 	import { isPastDate } from '$lib/date';
+	import { opponentCountries } from '$lib/country-flags';
 
 	let { form } = $props();
 	let selectedDate = $state('');
@@ -21,7 +22,12 @@
 
 		<div class="mb-3">
 			<label for="opponent" class="form-label">Gegner</label>
-			<input id="opponent" name="opponent" type="text" class="form-control" required>
+			<select id="opponent" name="opponent" class="form-select" required>
+				<option value="">Bitte wählen</option>
+				{#each opponentCountries as country}
+					<option value={country.name}>{country.name}</option>
+				{/each}
+			</select>
 		</div>
 
 		<div class="mb-3">

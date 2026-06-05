@@ -2,6 +2,8 @@
 	let { data } = $props();
 
 	let player = $derived(data.player);
+	let showDeleteModal = $state(false);
+	let deleteForm = null;
 	const fallbackPlayerImage = '/players/dummy_v1_rot.png';
 
 	const labels = {
@@ -72,6 +74,21 @@
 		event.currentTarget.onerror = null;
 		event.currentTarget.src = fallbackPlayerImage;
 	}
+
+	function askDeleteConfirmation(event) {
+		event.preventDefault();
+		deleteForm = event.currentTarget;
+		showDeleteModal = true;
+	}
+
+	function cancelDelete() {
+		deleteForm = null;
+		showDeleteModal = false;
+	}
+
+	function confirmDelete() {
+		deleteForm?.submit();
+	}
 </script>
 
 <svelte:head>
@@ -96,11 +113,7 @@
 				<form
 					method="POST"
 					action="?/deletePlayer"
-					onsubmit={(event) => {
-						if (!confirm(`Soll ${player.firstName} ${player.lastName} wirklich gelöscht werden?`)) {
-							event.preventDefault();
-						}
-					}}
+					onsubmit={askDeleteConfirmation}
 				>
 					<button type="submit" class="btn btn-outline-danger">Spieler löschen</button>
 				</form>
@@ -123,6 +136,27 @@
 		</div>
 	</div>
 </div>
+
+{#if showDeleteModal}
+	<div class="modal d-block" tabindex="-1" role="dialog" aria-modal="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="modal-title h5">Löschen wirklich vornehmen?</h2>
+					<button type="button" class="btn-close" aria-label="Abbrechen" onclick={cancelDelete}></button>
+				</div>
+				<div class="modal-body">
+					<p class="mb-0">Dieser Eintrag wird dauerhaft gelöscht.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-secondary" onclick={cancelDelete}>Abbrechen</button>
+					<button type="button" class="btn btn-danger" onclick={confirmDelete}>OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-backdrop show"></div>
+{/if}
 
 <style>
 	.player-detail {
@@ -182,5 +216,9 @@
 		.detail-row {
 			grid-template-columns: 1fr;
 		}
+	}
+
+	.modal {
+		background: rgba(0, 0, 0, 0.15);
 	}
 </style>

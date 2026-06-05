@@ -1,4 +1,9 @@
 <script>
+	import { getTodayDateInputValue, rejectFutureDate } from '$lib/date';
+
+	let { form } = $props();
+	const today = getTodayDateInputValue();
+
 	// Formular zum Spieler-Erfassen — wird im nächsten Schritt mit Form Action verknüpft
 </script>
 
@@ -13,6 +18,9 @@
 	<h1 class="fw-bold mb-4">Neuen Spieler erfassen</h1>
 
 	<form method="POST" action="?/createPlayer" class="card shadow-sm border-0 p-4">
+	{#if form?.error}
+		<div class="alert alert-danger" role="alert">{form.error}</div>
+	{/if}
 
 	<div class="mb-3">
 		<label for="firstName" class="form-label">Vorname</label>
@@ -57,7 +65,14 @@
 
 	<div class="mb-3">
 		<label for="birthDate" class="form-label">Geburtsdatum</label>
-		<input id="birthDate" name="birthDate" type="date" class="form-control">
+		<input
+			id="birthDate"
+			name="birthDate"
+			type="date"
+			max={today}
+			class="form-control"
+			oninput={rejectFutureDate}
+		>
 	</div>
 
 	<div class="mb-3">

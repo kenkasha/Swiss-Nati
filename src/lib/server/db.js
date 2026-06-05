@@ -67,6 +67,20 @@ async function updatePlayer(id, player) {
 	await syncLineupsForPlayerPosition(id, player.position);
 }
 
+async function deletePlayer(id) {
+	const playerId = new ObjectId(id);
+	const lineups = db.collection('lineups');
+
+	await lineups.updateMany(
+		{ 'positions.selectedPlayer': id },
+		{ $set: { 'positions.$[position].selectedPlayer': '', updatedAt: new Date() } },
+		{ arrayFilters: [{ 'position.selectedPlayer': id }] }
+	);
+
+	const result = await db.collection('players').deleteOne({ _id: playerId });
+	return result.deletedCount === 1;
+}
+
 async function createGame(game) {
 	const collection = db.collection('games');
 	await collection.insertOne(game);
@@ -78,6 +92,13 @@ async function updateGame(id, game) {
 		{ _id: new ObjectId(id) },
 		{ $set: game }
 	);
+}
+
+async function deleteGame(id) {
+	await db.collection('lineups').deleteMany({ gameId: id });
+
+	const result = await db.collection('games').deleteOne({ _id: new ObjectId(id) });
+	return result.deletedCount === 1;
 }
 
 async function getLineup(gameId) {
@@ -180,8 +201,10 @@ export default {
 	getGame,
 	createPlayer,
 	updatePlayer,
+	deletePlayer,
 	createGame,
 	updateGame,
+	deleteGame,
 	getLineup,
 	saveLineup
 };

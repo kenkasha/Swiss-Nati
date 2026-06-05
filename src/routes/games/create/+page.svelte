@@ -1,4 +1,9 @@
 <script>
+	import { getTodayDateInputValue } from '$lib/date';
+
+	let { form } = $props();
+	const today = getTodayDateInputValue();
+
 	// Formular zum Spiel-Erfassen — kommt im nächsten Schritt
 </script>
 
@@ -12,6 +17,9 @@
 	<h1 class="fw-bold mb-4">Neues Spiel erfassen</h1>
 
 <form method="POST" action="?/createGame" class="card shadow-sm border-0 p-4">
+	{#if form?.error}
+		<div class="alert alert-danger" role="alert">{form.error}</div>
+	{/if}
 
 	<div class="mb-3">
 		<label for="opponent" class="form-label">Gegner</label>
@@ -20,7 +28,7 @@
 
 	<div class="mb-3">
 		<label for="date" class="form-label">Datum</label>
-		<input id="date" name="date" type="date" class="form-control" required>
+		<input id="date" name="date" type="date" min={today} class="form-control" required>
 	</div>
 
 	<div class="mb-3">

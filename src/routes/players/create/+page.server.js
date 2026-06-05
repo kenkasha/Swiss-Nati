@@ -1,10 +1,20 @@
 import db from '$lib/server/db';
-import { redirect } from '@sveltejs/kit';
+import { getTodayDateInputValue } from '$lib/date';
+import { fail, redirect } from '@sveltejs/kit';
+
+function isFutureDate(date) {
+	return date && date > getTodayDateInputValue();
+}
 
 export const actions = {
 	createPlayer: async ({ request }) => {
 
 		const formData = await request.formData();
+		const birthDate = formData.get('birthDate') || null;
+
+		if (isFutureDate(birthDate)) {
+			return fail(400, { error: 'Das Geburtsdatum darf nicht in der Zukunft liegen.' });
+		}
 
 		const player = {
 			firstName: formData.get('firstName'),
@@ -13,7 +23,7 @@ export const actions = {
 			club: formData.get('club'),
 			status: formData.get('status'),
 			heightCm: Number(formData.get('heightCm')) || null,
-			birthDate: formData.get('birthDate') || null,
+			birthDate,
 			marketValueLabel: formData.get('marketValueLabel'),
 			preferredFoot: formData.get('preferredFoot')
 		};

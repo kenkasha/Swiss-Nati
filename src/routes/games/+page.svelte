@@ -1,48 +1,7 @@
 <script>
+	import { isPastDate } from '$lib/date';
+
 	let { data } = $props();
-
-	const today = getTodayAtMidnight();
-
-	function getTodayAtMidnight() {
-		const date = new Date();
-		date.setHours(0, 0, 0, 0);
-		return date;
-	}
-
-	function getGameDate(dateValue) {
-		if (dateValue instanceof Date) {
-			const date = new Date(dateValue);
-			date.setHours(0, 0, 0, 0);
-			return date;
-		}
-
-		if (typeof dateValue !== 'string') {
-			return null;
-		}
-
-		const isoDate = dateValue.match(/^(\d{4})-(\d{2})-(\d{2})/);
-		if (isoDate) {
-			return new Date(Number(isoDate[1]), Number(isoDate[2]) - 1, Number(isoDate[3]));
-		}
-
-		const swissDate = dateValue.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
-		if (swissDate) {
-			return new Date(Number(swissDate[3]), Number(swissDate[2]) - 1, Number(swissDate[1]));
-		}
-
-		const parsedDate = new Date(dateValue);
-		if (Number.isNaN(parsedDate.getTime())) {
-			return null;
-		}
-
-		parsedDate.setHours(0, 0, 0, 0);
-		return parsedDate;
-	}
-
-	function isPastGame(game) {
-		const gameDate = getGameDate(game.date);
-		return gameDate ? gameDate < today : false;
-	}
 </script>
 
 <svelte:head>
@@ -69,7 +28,7 @@
 	{:else}
 		<div class="row g-4">
 			{#each data.games as game}
-				{@const pastGame = isPastGame(game)}
+				{@const pastGame = isPastDate(game.date)}
 				<div class="col-md-6">
 					<div class:past-game={pastGame} class="card shadow-sm border-0 h-100">
 						<div class="card-body">
@@ -94,10 +53,32 @@
 								<strong>🏆 Wettbewerb:</strong> {game.competition}
 							</p>
 
-							{#if !pastGame}
-								<a href={`/games/${game._id}/edit`} class="btn btn-outline-primary">
-									Bearbeiten
+							<div class="game-actions">
+								<a href={`/lineup?gameId=${game._id}`} class="btn btn-outline-secondary">
+									{pastGame ? 'Aufstellung ansehen' : 'Zur Aufstellung'}
 								</a>
+								{#if !pastGame}
+									<a href={`/games/${game._id}/edit`} class="btn btn-outline-primary">
+										Bearbeiten
+									</a>
+								{/if}
+								<form
+									method="POST"
+									action="?/deleteGame"
+									onsubmit={(event) => {
+										if (!confirm(`Soll das Spiel Schweiz vs. ${game.opponent} wirklich gelöscht werden?`)) {
+											event.preventDefault();
+										}
+									}}
+								>
+									<input type="hidden" name="gameId" value={game._id}>
+									<button type="submit" class="btn btn-outline-danger">Löschen</button>
+								</form>
+							</div>
+							{#if pastGame && !game.hasLineup}
+								<p class="small mt-3 mb-0">
+									Für dieses vergangene Spiel wurde keine Aufstellung gespeichert.
+								</p>
 							{/if}
 						</div>
 					</div>
@@ -129,5 +110,31 @@
 	.past-game .btn-outline-primary:hover {
 		background-color: white !important;
 		color: #343a40 !important;
+	}
+
+	.game-actions {
+		display: flex;
+		gap: 8px;
+		flex-wrap: wrap;
+	}
+
+	.past-game .btn-outline-danger {
+		color: white;
+		border-color: white;
+	}
+
+	.past-game .btn-outline-danger:hover {
+		background-color: white;
+		color: #dc3545;
+	}
+
+	.past-game .btn-outline-secondary {
+		color: white;
+		border-color: white;
+	}
+
+	.past-game .btn-outline-secondary:hover {
+		background-color: white;
+		color: #343a40;
 	}
 </style>

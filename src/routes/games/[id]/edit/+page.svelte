@@ -1,7 +1,10 @@
 <script>
-	let { data } = $props();
+	import { getTodayDateInputValue } from '$lib/date';
+
+	let { data, form } = $props();
 
 	let game = $derived(data.game);
+	const today = getTodayDateInputValue();
 </script>
 
 <svelte:head>
@@ -13,6 +16,10 @@
 	<h1 class="fw-bold mb-4">Spiel bearbeiten</h1>
 
 	<form method="POST" action="?/updateGame" class="card shadow-sm border-0 p-4">
+		{#if form?.error}
+			<div class="alert alert-danger" role="alert">{form.error}</div>
+		{/if}
+
 		<div class="mb-3">
 			<label for="opponent" class="form-label">Gegner</label>
 			<input id="opponent" name="opponent" type="text" class="form-control" value={game.opponent} required>
@@ -20,7 +27,7 @@
 
 		<div class="mb-3">
 			<label for="date" class="form-label">Datum</label>
-			<input id="date" name="date" type="date" class="form-control" value={game.date} required>
+			<input id="date" name="date" type="date" min={today} class="form-control" value={game.date} required>
 		</div>
 
 		<div class="mb-3">

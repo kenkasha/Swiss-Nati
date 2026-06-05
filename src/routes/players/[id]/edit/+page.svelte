@@ -1,7 +1,10 @@
 <script>
-	let { data } = $props();
+	import { getTodayDateInputValue, rejectFutureDate, toDateInputValue } from '$lib/date';
+
+	let { data, form } = $props();
 
 	let player = $derived(data.player);
+	const today = getTodayDateInputValue();
 </script>
 
 <svelte:head>
@@ -13,6 +16,10 @@
 	<h1 class="fw-bold mb-4">Spieler bearbeiten</h1>
 
 	<form method="POST" action="?/updatePlayer" class="card shadow-sm border-0 p-4">
+		{#if form?.error}
+			<div class="alert alert-danger" role="alert">{form.error}</div>
+		{/if}
+
 		<div class="mb-3">
 			<label for="firstName" class="form-label">Vorname</label>
 			<input id="firstName" name="firstName" type="text" class="form-control" value={player.firstName} required>
@@ -58,6 +65,19 @@
 				class="form-control"
 				value={player.marketValueLabel ?? ''}
 				placeholder="z.B. CHF 36.5 Mio."
+			>
+		</div>
+
+		<div class="mb-3">
+			<label for="birthDate" class="form-label">Geburtsdatum</label>
+			<input
+				id="birthDate"
+				name="birthDate"
+				type="date"
+				max={today}
+				class="form-control"
+				value={toDateInputValue(player.birthDate)}
+				oninput={rejectFutureDate}
 			>
 		</div>
 

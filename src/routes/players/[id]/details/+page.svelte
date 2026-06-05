@@ -91,7 +91,20 @@
 			/>
 			<h1 class="fw-bold mb-1">{player.firstName} {player.lastName}</h1>
 			<p class="text-muted mb-3">{player.position}</p>
-			<a href={`/players/${player._id}/edit`} class="btn btn-primary">Bearbeiten</a>
+			<div class="player-actions">
+				<a href={`/players/${player._id}/edit`} class="btn btn-primary">Bearbeiten</a>
+				<form
+					method="POST"
+					action="?/deletePlayer"
+					onsubmit={(event) => {
+						if (!confirm(`Soll ${player.firstName} ${player.lastName} wirklich gelöscht werden?`)) {
+							event.preventDefault();
+						}
+					}}
+				>
+					<button type="submit" class="btn btn-outline-danger">Spieler löschen</button>
+				</form>
+			</div>
 		</div>
 
 		<div class="card shadow-sm border-0">
@@ -133,6 +146,13 @@
 		box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
 		margin-bottom: 18px;
 		background: #f8f9fa;
+	}
+
+	.player-actions {
+		display: flex;
+		justify-content: center;
+		gap: 8px;
+		flex-wrap: wrap;
 	}
 
 	.detail-list {

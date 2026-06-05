@@ -107,10 +107,14 @@
 	function getInitialPositions() {
 		const labels = formations[selectedFormation] ?? formations['4-3-3'];
 
-		return labels.map((label, index) => ({
-			label,
-			selectedPlayer: data.lineup?.positions?.[index]?.selectedPlayer ?? ''
-		}));
+		return labels.map((label, index) => {
+			const selectedPlayer = data.lineup?.positions?.[index]?.selectedPlayer ?? '';
+
+			return {
+				label,
+				selectedPlayer: data.isReadOnly || isPlayerAvailable(selectedPlayer) ? selectedPlayer : ''
+			};
+		});
 	}
 
 	function changeFormation(event) {
@@ -124,6 +128,7 @@
 			if (
 				previousPlayerId &&
 				!usedPlayerIds.has(previousPlayerId) &&
+				isPlayerAvailable(previousPlayerId) &&
 				getPlayer(previousPlayerId)?.position === getAllowedPlayerPosition(position.label)
 			) {
 				usedPlayerIds.add(previousPlayerId);
@@ -153,6 +158,11 @@
 
 	function getPlayer(playerId) {
 		return data.players.find((player) => player._id === playerId);
+	}
+
+	function isPlayerAvailable(playerId) {
+		const player = getPlayer(playerId);
+		return player && player.status !== 'verletzt' && player.status !== 'gesperrt';
 	}
 
 	function getAllowedPlayerPosition(positionLabel) {
@@ -195,7 +205,10 @@
 		const allowedPosition = getAllowedPlayerPosition(positionLabel);
 		const selectedPlayerIds = getSelectedPlayerIds(currentIndex);
 		return data.players.filter(
-			(player) => player.position === allowedPosition && !selectedPlayerIds.includes(player._id)
+			(player) =>
+				player.position === allowedPosition &&
+				isPlayerAvailable(player._id) &&
+				!selectedPlayerIds.includes(player._id)
 		);
 	}
 
@@ -253,6 +266,11 @@
 			Erstelle zuerst ein Spiel, bevor du eine Aufstellung speichern kannst.
 		</div>
 	{:else}
+		{#if data.isReadOnly}
+			<div class="alert alert-secondary" role="alert">
+				Dieses Spiel ist vergangen. Die Aufstellung kann nur noch angesehen werden.
+			</div>
+		{/if}
 		<form method="POST" action={`?/saveLineup&gameId=${data.selectedGameId}`}>
 			<div class="lineup-toolbar mb-4">
 				<div>
@@ -274,6 +292,7 @@
 						class="form-select"
 						bind:value={selectedFormation}
 						onchange={changeFormation}
+						disabled={data.isReadOnly}
 					>
 						{#each formationOptions as formation}
 							<option value={formation}>{formation}</option>
@@ -303,6 +322,7 @@
 							name={`position-${index}`}
 							class="form-select form-select-sm"
 							bind:value={position.selectedPlayer}
+							disabled={data.isReadOnly}
 						>
 							<option value="">Spieler wählen</option>
 							{#each getPlayersForPosition(position.label, index) as player}
@@ -332,11 +352,13 @@
 				{/each}
 			</div>
 
-			<div class="text-center mt-4">
-				<button type="submit" class="btn btn-primary btn-lg">
-					Aufstellung speichern
-				</button>
-			</div>
+			{#if !data.isReadOnly}
+				<div class="text-center mt-4">
+					<button type="submit" class="btn btn-primary btn-lg">
+						Aufstellung speichern
+					</button>
+				</div>
+			{/if}
 		</form>
 	{/if}
 </div>

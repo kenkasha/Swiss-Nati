@@ -8,13 +8,15 @@ export async function load({ url }) {
 	const selectedGameId = url.searchParams.get('gameId') ?? games[0]?._id ?? '';
 	const lineup = selectedGameId ? await db.getLineup(selectedGameId) : null;
 	const selectedGame = games.find((game) => game._id === selectedGameId);
+	const isPastGame = selectedGame ? isPastDate(selectedGame.date) : false;
 
 	return {
 		players,
 		games,
 		selectedGameId,
 		lineup,
-		isReadOnly: selectedGame ? isPastDate(selectedGame.date) : false
+		isReadOnly: isPastGame && Boolean(lineup),
+		isPastGame
 	};
 }
 
@@ -32,18 +34,23 @@ export const actions = {
 			throw error(404, 'Spiel nicht gefunden');
 		}
 
-		if (isPastDate(game.date)) {
+		const lineup = await db.getLineup(gameId);
+
+		if (isPastDate(game.date) && lineup) {
 			throw error(403, 'Aufstellungen vergangener Spiele können nicht mehr geändert werden');
 		}
 
 		const formData = await request.formData();
 		const formation = formData.get('formation') ?? '4-3-3';
 		const players = await db.getPlayers();
+		const shouldFilterUnavailablePlayers = !isPastDate(game.date);
 		const selectedPlayerIds = new Set();
 		const positions = Array.from({ length: 11 }, (_, index) => {
 			const selectedPlayer = formData.get(`position-${index}`) ?? '';
 			const player = players.find((player) => player._id === selectedPlayer);
-			const isUnavailable = player?.status === 'verletzt' || player?.status === 'gesperrt';
+			const isUnavailable =
+				shouldFilterUnavailablePlayers &&
+				(player?.status === 'verletzt' || player?.status === 'gesperrt' || player?.status === 'fraglich');
 			const uniqueSelectedPlayer =
 				selectedPlayerIds.has(selectedPlayer) || isUnavailable ? '' : selectedPlayer;
 

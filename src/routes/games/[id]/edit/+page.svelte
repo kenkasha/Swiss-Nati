@@ -40,6 +40,7 @@
 			<select id="competition" name="competition" class="form-select" required>
 				<option value="">Bitte wählen</option>
 				<option value="WM 2026" selected={game.competition === 'WM 2026'}>WM 2026</option>
+				<option value="WM-Quali" selected={game.competition === 'WM-Quali'}>WM-Quali</option>
 				<option value="Freundschaftsspiel" selected={game.competition === 'Freundschaftsspiel'}>Freundschaftsspiel</option>
 				<option value="Nations League" selected={game.competition === 'Nations League'}>Nations League</option>
 				<option value="EM-Quali" selected={game.competition === 'EM-Quali'}>EM-Quali</option>

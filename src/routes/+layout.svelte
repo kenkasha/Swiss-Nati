@@ -51,12 +51,19 @@
 						<li><a class="dropdown-item" href="/players/overview">Detailsübersicht</a></li>
 					</ul>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item dropdown">
 					<a
-						class="nav-link"
+						class="nav-link dropdown-toggle"
 						class:active={page.url.pathname.startsWith('/games')}
 						href="/games"
+						role="button"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
 					>Spiele</a>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item" href="/games">Spieleliste</a></li>
+						<li><a class="dropdown-item" href="/games/results">Resultate</a></li>
+					</ul>
 				</li>
 				<li class="nav-item">
 					<a

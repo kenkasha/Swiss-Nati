@@ -112,7 +112,7 @@
 
 			return {
 				label,
-				selectedPlayer: data.isReadOnly || isPlayerAvailable(selectedPlayer) ? selectedPlayer : ''
+				selectedPlayer: data.isReadOnly || isPlayerSelectable(selectedPlayer) ? selectedPlayer : ''
 			};
 		});
 	}
@@ -128,7 +128,7 @@
 			if (
 				previousPlayerId &&
 				!usedPlayerIds.has(previousPlayerId) &&
-				isPlayerAvailable(previousPlayerId) &&
+				isPlayerSelectable(previousPlayerId) &&
 				getPlayer(previousPlayerId)?.position === getAllowedPlayerPosition(position.label)
 			) {
 				usedPlayerIds.add(previousPlayerId);
@@ -160,9 +160,17 @@
 		return data.players.find((player) => player._id === playerId);
 	}
 
-	function isPlayerAvailable(playerId) {
+	function isPlayerSelectable(playerId) {
 		const player = getPlayer(playerId);
-		return player && player.status !== 'verletzt' && player.status !== 'gesperrt';
+		return player && (!shouldFilterUnavailablePlayers() || isPlayerAvailable(player));
+	}
+
+	function isPlayerAvailable(player) {
+		return player.status !== 'verletzt' && player.status !== 'gesperrt' && player.status !== 'fraglich';
+	}
+
+	function shouldFilterUnavailablePlayers() {
+		return !data.isPastGame;
 	}
 
 	function getAllowedPlayerPosition(positionLabel) {
@@ -207,7 +215,7 @@
 		return data.players.filter(
 			(player) =>
 				player.position === allowedPosition &&
-				isPlayerAvailable(player._id) &&
+				(!shouldFilterUnavailablePlayers() || isPlayerAvailable(player)) &&
 				!selectedPlayerIds.includes(player._id)
 		);
 	}
@@ -269,6 +277,10 @@
 		{#if data.isReadOnly}
 			<div class="alert alert-secondary" role="alert">
 				Dieses Spiel ist vergangen. Die Aufstellung kann nur noch angesehen werden.
+			</div>
+		{:else if data.isPastGame}
+			<div class="alert alert-warning" role="alert">
+				Dieses Spiel ist vergangen und hat noch keine gespeicherte Aufstellung. Du kannst sie jetzt einmalig nacherfassen.
 			</div>
 		{/if}
 		<form method="POST" action={`?/saveLineup&gameId=${data.selectedGameId}`}>

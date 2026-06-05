@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+	<rect width="64" height="64" rx="10" fill="#fff"/>
+	<path fill="#b22234" d="M0 0h64v5H0zm0 10h64v5H0zm0 10h64v5H0zm0 10h64v5H0zm0 10h64v5H0zm0 10h64v5H0zm0 10h64v4H0z"/>
+	<path fill="#3c3b6e" d="M0 0h31v35H0z"/>
+	<g fill="#fff">
+		<circle cx="5" cy="5" r="1.2"/><circle cx="12" cy="5" r="1.2"/><circle cx="19" cy="5" r="1.2"/><circle cx="26" cy="5" r="1.2"/>
+		<circle cx="8.5" cy="10" r="1.2"/><circle cx="15.5" cy="10" r="1.2"/><circle cx="22.5" cy="10" r="1.2"/>
+		<circle cx="5" cy="15" r="1.2"/><circle cx="12" cy="15" r="1.2"/><circle cx="19" cy="15" r="1.2"/><circle cx="26" cy="15" r="1.2"/>
+		<circle cx="8.5" cy="20" r="1.2"/><circle cx="15.5" cy="20" r="1.2"/><circle cx="22.5" cy="20" r="1.2"/>
+		<circle cx="5" cy="25" r="1.2"/><circle cx="12" cy="25" r="1.2"/><circle cx="19" cy="25" r="1.2"/><circle cx="26" cy="25" r="1.2"/>
+		<circle cx="8.5" cy="30" r="1.2"/><circle cx="15.5" cy="30" r="1.2"/><circle cx="22.5" cy="30" r="1.2"/>
+	</g>
+</svg>

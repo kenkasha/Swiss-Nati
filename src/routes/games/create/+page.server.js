@@ -1,16 +1,16 @@
 import db from '$lib/server/db';
+import { redirect } from '@sveltejs/kit';
 import { isPastDate } from '$lib/date';
-import { fail, redirect } from '@sveltejs/kit';
+
+function parseGoalCount(value) {
+	const goals = Number(value);
+	return Number.isInteger(goals) && goals >= 0 ? goals : null;
+}
 
 export const actions = {
 	createGame: async ({ request }) => {
-
 		const formData = await request.formData();
 		const date = formData.get('date');
-
-		if (isPastDate(date)) {
-			return fail(400, { error: 'Neue Spiele dürfen nicht in der Vergangenheit liegen.' });
-		}
 
 		const game = {
 			opponent: formData.get('opponent'),
@@ -18,6 +18,21 @@ export const actions = {
 			location: formData.get('location'),
 			competition: formData.get('competition')
 		};
+
+		if (isPastDate(date)) {
+			const opponentGoals = parseGoalCount(formData.get('opponentGoals'));
+			const swissGoals = parseGoalCount(formData.get('swissGoals'));
+
+			if (opponentGoals !== null && swissGoals !== null) {
+				game.result = {
+					status: 'Full-time',
+					homeTeam: 'opponent',
+					opponentGoals,
+					swissGoals,
+					events: []
+				};
+			}
+		}
 
 		await db.createGame(game);
 

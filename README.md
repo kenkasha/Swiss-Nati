@@ -727,4 +727,4 @@ Für den Prototyp wurden verschiedene öffentlich zugängliche Quellen und Testd
 
 ### Hinweis zu Urheberrecht und Nutzung
 
-Die verwendeten Daten und Assets dienen dem Prototyping-Kontext und der Demonstration der Funktionalität. Für eine produktive Veröffentlichung müssten Bildrechte, Logo-Nutzung, Datenquellen und Lizenzen nochmals geprüft und gegebenenfalls durch eigene, lizenzfreie oder offiziell freigegebene Assets ersetzt werden.
+Die verwendeten Daten und Assets dienen dem Prototyping-Kontext und der Demonstration der Funktionalität. Für eine produktive Veröffentlichung müssten Bildrechte, Logo-Nutzung, Datenquellen und Lizenzen nochmals geprüft und gegebenenfalls durch eigene, lizenzfreie oder offiziell freigegebene Assets ersetzt werden. 
